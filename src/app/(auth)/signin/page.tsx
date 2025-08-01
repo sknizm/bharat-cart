@@ -1,47 +1,48 @@
 "use client";
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import Logo from '@/components/ui/logo'
 import { Loader2 } from 'lucide-react'
-import Link from 'next/link';
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 
-const SignUp = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+const SignIn = () => {
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [isLoading, setIsLoading] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
 
-  async function handleSignup(e: React.FormEvent) {
-    e.preventDefault();
-    setIsLoading(true)
-    setErrorMessage("")
 
-    try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (res.ok) {
-         toast.success("Profile created Successfully")
-        
-      }else{
-        setErrorMessage(data.error)
-      }
-     
+
+    async function handleSignup(e: React.FormEvent) {
+        e.preventDefault();
+        setIsLoading(true);
+        setErrorMessage("")
+
+       try{
+         const res = await fetch("/api/auth/signin",{
+          method:"POST",
+          headers:{
+            'Content-type':'application/json',
+          },
+          body: JSON.stringify({email, password})
+        });
+
+        const data = await res.json();
+
+        if(res.ok){
+          toast.success("Login Successful");
+        }else{
+          setErrorMessage(data.error)
+        }
+       }catch(err){
+        setErrorMessage(`${err}`)
+       }finally{
+        setIsLoading(false)
+       }
     }
-    catch (error) {
-      setErrorMessage(`${error}`)
-    }finally{
-      setIsLoading(false)
-    }
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-green-100 p-4">
@@ -49,9 +50,9 @@ const SignUp = () => {
         <CardHeader className="flex flex-col items-center justify-center space-y-2 text-center">
           <Logo />
           <div className="space-y-2">
-            <CardTitle className="text-2xl font-bold text-green-800">Create an Account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-green-800">Login to your Account</CardTitle>
             <CardDescription className="text-gray-600">
-              Join us today and get started
+              Please enter your credentials below
             </CardDescription>
           </div>
         </CardHeader>
@@ -86,8 +87,13 @@ const SignUp = () => {
                 required
                 minLength={6}
               />
-              <p className="text-xs text-gray-500">Minimum 6 characters</p>
+                 <div className=' w-full flex justify-end'>
+                <Link className=' text-xs text-green-600 hover:text-green-700 hover:underline' 
+                href={'/forget-password'}>Forget Password</Link>
+
             </div>
+            </div>
+         
 
             <Button
               disabled={isLoading}
@@ -97,9 +103,9 @@ const SignUp = () => {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
+                  Logging in...
                 </>
-              ) : "Get Started"}
+              ) : "Login"}
             </Button>
 
             {errorMessage && (
@@ -112,12 +118,12 @@ const SignUp = () => {
 
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600">
-            Already have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
-              href="/signin"
+              href="/signup"
               className="font-medium text-green-600 hover:text-green-700 hover:underline"
             >
-              Sign in
+              Sign up here
             </Link>
           </p>
         </CardFooter>
@@ -126,4 +132,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignIn

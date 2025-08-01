@@ -1,4 +1,5 @@
-- make models for mvp
-- make signup, signin, store-list
+- make signup, signin
+- make the user cookie
+- make the store-list
 - make store dashoard, all product page, add product page
 - make the store frontpage that shows all products category wise
