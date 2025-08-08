@@ -30,8 +30,8 @@ export async function getCurrentUser() {
 
     if(!session || !session.userId) return null
 
-    const user = await User.findById(session.userId).exec();
-
+    const user = await User.findById(session.userId,{ _id:1, email:1 }).lean().exec();
+    
     return user || null
 
 }
