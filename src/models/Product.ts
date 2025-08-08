@@ -8,4 +8,4 @@ const ProductSchema = new Schema({
     categories:[{type:Schema.Types.ObjectId,ref:"Category"}]
 });
 
-export default models.Product || model("Product",ProductSchema)
+export default models?.Product || model("Product",ProductSchema)

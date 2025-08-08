@@ -1,4 +1,5 @@
 import { connectDB } from "@/lib/mongoose";
+import { createSession, deleteAllSession } from "@/lib/queries/session";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 
@@ -16,7 +17,8 @@ export async function POST(req: Request) {
         if (user.password !== password) {
             return NextResponse.json({ error: "Password is incorrect" }, { status: 400 })
         }
-
+        await deleteAllSession(user._id);
+        await createSession(user._id)
         return NextResponse.json({ error: "Login Successful" }, { status: 201 })
     }
     catch (error) {

@@ -14,4 +14,4 @@ const StoreSchema = new Schema({
     
 })
 
-export default models.Store || model("Store", StoreSchema)
+export default models?.Store || model("Store", StoreSchema)

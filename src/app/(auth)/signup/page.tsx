@@ -5,10 +5,12 @@ import { Input } from '@/components/ui/input'
 import Logo from '@/components/ui/logo'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 
 const SignUp = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -29,16 +31,17 @@ const SignUp = () => {
       });
       const data = await res.json();
       if (res.ok) {
-         toast.success("Profile created Successfully")
-        
-      }else{
+        toast.success("Profile created Successfully")
+        router.push('/store-list')
+
+      } else {
         setErrorMessage(data.error)
       }
-     
+
     }
     catch (error) {
       setErrorMessage(`${error}`)
-    }finally{
+    } finally {
       setIsLoading(false)
     }
   }

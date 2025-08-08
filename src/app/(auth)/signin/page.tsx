@@ -5,44 +5,47 @@ import { Input } from '@/components/ui/input'
 import Logo from '@/components/ui/logo'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 
 const SignIn = () => {
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [isLoading, setIsLoading] = useState(false);
-const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
 
 
-    async function handleSignup(e: React.FormEvent) {
-        e.preventDefault();
-        setIsLoading(true);
-        setErrorMessage("")
+  async function handleSignup(e: React.FormEvent) {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage("")
 
-       try{
-         const res = await fetch("/api/auth/signin",{
-          method:"POST",
-          headers:{
-            'Content-type':'application/json',
-          },
-          body: JSON.stringify({email, password})
-        });
+    try {
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if(res.ok){
-          toast.success("Login Successful");
-        }else{
-          setErrorMessage(data.error)
-        }
-       }catch(err){
-        setErrorMessage(`${err}`)
-       }finally{
-        setIsLoading(false)
-       }
+      if (res.ok) {
+        toast.success("Login Successful");
+        router.push('/store-list')
+      } else {
+        setErrorMessage(data.error)
+      }
+    } catch (err) {
+      setErrorMessage(`${err}`)
+    } finally {
+      setIsLoading(false)
     }
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-green-100 p-4">
@@ -87,13 +90,13 @@ const [errorMessage, setErrorMessage] = useState("");
                 required
                 minLength={6}
               />
-                 <div className=' w-full flex justify-end'>
-                <Link className=' text-xs text-green-600 hover:text-green-700 hover:underline' 
-                href={'/forget-password'}>Forget Password</Link>
+              <div className=' w-full flex justify-end'>
+                <Link className=' text-xs text-green-600 hover:text-green-700 hover:underline'
+                  href={'/forget-password'}>Forget Password</Link>
 
+              </div>
             </div>
-            </div>
-         
+
 
             <Button
               disabled={isLoading}

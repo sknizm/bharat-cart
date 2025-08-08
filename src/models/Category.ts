@@ -5,4 +5,4 @@ const CategorySchema = new Schema({
     store:{type:Schema.Types.ObjectId,ref:"Category",required:true}
 })
 
-export default models.Category || model("Category", CategorySchema)
+export default models?.Category || model("Category", CategorySchema)

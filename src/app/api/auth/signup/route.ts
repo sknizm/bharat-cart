@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { CheckIfUserAlreadyExist, CreateUser } from "@/lib/queries/user";
+import { createSession } from "@/lib/queries/session";
 
 export async function POST(req: Request) {
   try {
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
-
+    await createSession(newUser._id);
     // Success response
     return NextResponse.json(
       { message: "User created successfully" },

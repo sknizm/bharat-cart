@@ -5,4 +5,4 @@ const ImageSchema = new Schema({
     store:{type:Schema.Types.ObjectId,ref:"Store",required:true}
 })
 
-export default models.Image || model("Image", ImageSchema)
+export default models?.Image || model("Image", ImageSchema)
