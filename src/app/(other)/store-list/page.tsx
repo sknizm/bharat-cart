@@ -20,6 +20,7 @@ export default function StoreList(){
         if (!data.stores || data.stores.length === 0) {
           router.push('/onboarding')
         } else {
+          console.log("STORES", data.stores)
           setStores(data.stores)
         }
       } catch (error) {

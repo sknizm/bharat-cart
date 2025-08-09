@@ -1,0 +1,37 @@
+import Store from "@/models/Store";
+import { connectDB } from "../mongoose";
+import Membership from "@/models/Membership";
+
+
+export async function createStore(name: string, slug: string, owner: string) {
+
+    try {
+
+        await connectDB();
+        const expiryDate = new Date;
+        expiryDate.setDate(expiryDate.getDate() + 3);
+
+        const membership = await Membership.create({
+            type: "FREE",
+            createdDate: new Date,
+            expiryDate
+
+        })
+        const store = await Store.create({ name, slug, owner, membership: membership._id });
+       
+        return store
+    } catch (error) {
+        console.log("KYA", error)
+        return null
+    }
+}
+
+export async function checkSlugIfExist(slug: string) {
+    await connectDB();
+    const existingSlug = await Store.findOne({ slug: slug });
+    if (existingSlug) {
+        return true
+
+    }
+    return false
+}

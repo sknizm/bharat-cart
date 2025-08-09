@@ -1,6 +1,7 @@
 "use client";
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
+import ErrorIcon from '@/components/ui/error-icon';
 import { Input } from '@/components/ui/input'
 import Logo from '@/components/ui/logo'
 import { Loader2 } from 'lucide-react'
@@ -112,7 +113,8 @@ const SignIn = () => {
             </Button>
 
             {errorMessage && (
-              <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
+              <div className="flex items-center p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
+                <ErrorIcon/>
                 {errorMessage}
               </div>
             )}
