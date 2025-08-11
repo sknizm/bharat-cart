@@ -2,7 +2,7 @@
 import User from "@/models/User";
 import { connectDB } from "../mongoose";
 import { cookies } from "next/headers";
-import { SESSION_COOKIE_NAME } from "../types";
+import { SESSION_COOKIE_NAME, type UserType } from "../types";
 import Session from "@/models/Session";
 
 export async function CheckIfUserAlreadyExist(email:string){
@@ -18,11 +18,11 @@ export async function CreateUser(email:string, password:string){
 }
 
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<UserType | null> {
     const cookieStore = cookies();
     const sessionToken = (await cookieStore).get(SESSION_COOKIE_NAME)?.value;
 
-    if(!sessionToken) return
+    if(!sessionToken) return null
 
     await connectDB();
 
@@ -32,7 +32,7 @@ export async function getCurrentUser() {
 
     const user = await User.findById(session.userId,{ _id:1, email:1 }).lean().exec();
     
-    return user || null
+    return (user as unknown as UserType) || null;
 
 }
 

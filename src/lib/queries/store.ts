@@ -18,7 +18,7 @@ export async function createStore(name: string, slug: string, owner: string) {
 
         })
         const store = await Store.create({ name, slug, owner, membership: membership._id });
-       
+
         return store
     } catch (error) {
         console.log("KYA", error)
@@ -34,4 +34,14 @@ export async function checkSlugIfExist(slug: string) {
 
     }
     return false
+}
+
+export async function isStoreOwner(userId: string, storeSlug: string) {
+    await connectDB();
+    return await Store.exists({ slug: storeSlug, owner: userId });
+}
+
+export async function doesStoreExist(slug: string) {
+    await connectDB();
+    return await Store.exists({ slug: slug });
 }

@@ -7,7 +7,7 @@ import { handleLogout } from '@/lib/queries/auth'
 const Logout = () => {
     
   return (
-    <Button onClick={handleLogout}>Logout</Button>
+    <Button variant={'destructive'} onClick={handleLogout}>Logout</Button>
   )
 }
 
