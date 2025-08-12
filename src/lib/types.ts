@@ -15,3 +15,7 @@ export interface StoreType {
   logo: string | null;
   // Add any other fields you need
 };
+export interface ImageType {
+  _id: string;
+  url: string;
+};

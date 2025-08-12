@@ -1,4 +1,5 @@
 "use client";
+import ImageBucket from '@/components/dashboard/image-bucket';
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -6,13 +7,14 @@ import { useStore } from '@/lib/context/store-context';
 import { copyToClipBoard } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react'
 import React from 'react'
+import { toast } from 'sonner';
 
 
 const Home = () => {
   const store = useStore()
-  const menuLink = store ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}` : '';
+  const storeLink = store ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}` : '';
 
-  
+
   return (
     <div className="space-y-6 p-4">
       <div className="grid gap-4 md:grid-cols-2">
@@ -23,24 +25,24 @@ const Home = () => {
           <CardContent className="space-y-4">
             <div className="flex flex-col items-center gap-2">
               <Input
-                value={menuLink}
+                value={storeLink}
                 readOnly
                 className="flex-1 py-2 "
               />
               <div className=' w-full flex items-start gap-2'>
                 <Button
                   onClick={() => {
-                    if(store){
-                      copyToClipBoard(menuLink)
+                    if (store) {
+                      copyToClipBoard(storeLink)
                     }
-                   }}
+                  }}
                   variant="default"
                   className=' bg-green-600'
-                  disabled={!menuLink}
+                  disabled={!storeLink}
                 >
                   Copy Link
                 </Button>
-                <a href={menuLink} target="_blank" rel="noopener noreferrer">
+                <a href={storeLink} target="_blank" rel="noopener noreferrer">
                   <Button className=' bg-blue-600' variant="default" >
                     View Store
                   </Button>
@@ -101,6 +103,9 @@ const Home = () => {
             </div>
           </CardContent>
         </Card>
+        <ImageBucket onSelect={(url:string)=>{
+          toast.message(url)
+        }}/>
       </div>
     </div>
   )

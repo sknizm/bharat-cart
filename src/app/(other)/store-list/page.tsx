@@ -3,14 +3,14 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import Logout from '@/components/ui/logout-button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Store } from '@/lib/types'
+import { StoreType } from '@/lib/types'
 import { Plus, LinkIcon, ExternalLink, LayoutDashboard, StoreIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export default function StoreList(){
   const router = useRouter()
-  const [stores, setStores] = useState<Store[] | null>(null);
+  const [stores, setStores] = useState<StoreType[] | null>(null);
    const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function StoreList(){
     <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {stores.map((store) => {
         const domain = store.domain || `${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}`
-        const dashboardUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}/dashboard`
+        const dashboardUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}/dashboard/home`
         
         return (
           <Card 

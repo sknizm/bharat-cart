@@ -1,7 +1,6 @@
 import { connectDB } from "@/lib/mongoose";
 import { getCurrentUser } from "@/lib/queries/user";
 import Store from "@/models/Store";
-import { Types } from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET() {

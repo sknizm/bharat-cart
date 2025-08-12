@@ -1,7 +1,6 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { StoreProvider } from "@/lib/context/store-context";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { isStoreOwner } from "@/lib/queries/store";
 import { getCurrentUser } from "@/lib/queries/user";
 import { redirect } from "next/navigation";
