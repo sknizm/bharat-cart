@@ -7,7 +7,7 @@ export interface UserType {
   password?: string
 }
 
-export interface Store {
+export interface StoreType {
   _id: string;
   name: string;
   slug: string;

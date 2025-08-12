@@ -1,18 +1,22 @@
 import NotFound from "@/components/ui/store-not-found";
-import { doesStoreExist } from "@/lib/queries/store";
+import { StoreProvider } from "@/lib/context/store-context";
+import { getStoreDeatilsBySlug } from "@/lib/queries/store";
 
 export default async function StoreLayout(
     { children, params }: { children: React.ReactNode; params: { slug: string } }
 ) {
     const { slug } = await params;
-
-    if (!await doesStoreExist(slug)) {
+    const store = await getStoreDeatilsBySlug(slug);
+    if (!store){
         return <NotFound/>
     }
-
+ 
     return (
-        <div className=" min-h-screen">
+        <StoreProvider store={store}>
+ <div className=" min-h-screen">
             {children}
         </div>
+        </StoreProvider>
+       
     )
 }

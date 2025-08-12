@@ -1,15 +1,15 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import { Store } from "../types";
+import { StoreType } from "../types";
 
-const StoreContext = createContext<Store | null>(null);
+const StoreContext = createContext<StoreType | null>(null);
 
 export const StoreProvider = ({
     store,
 children,
 }: {
-store: Store;
+store: StoreType;
 children: React.ReactNode;
 }) => {
     return (

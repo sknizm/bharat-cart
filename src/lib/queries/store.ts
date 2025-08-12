@@ -1,6 +1,7 @@
 import Store from "@/models/Store";
 import { connectDB } from "../mongoose";
 import Membership from "@/models/Membership";
+import { StoreType } from "../types";
 
 
 export async function createStore(name: string, slug: string, owner: string) {
@@ -21,7 +22,6 @@ export async function createStore(name: string, slug: string, owner: string) {
 
         return store
     } catch (error) {
-        console.log("KYA", error)
         return null
     }
 }
@@ -44,4 +44,13 @@ export async function isStoreOwner(userId: string, storeSlug: string) {
 export async function doesStoreExist(slug: string) {
     await connectDB();
     return await Store.exists({ slug: slug });
+}
+
+export async function getStoreDeatilsBySlug(slug: string) {
+    await connectDB();
+    const storeDoc = await Store.findOne({ slug });
+    if (!storeDoc) return null;
+
+    const store = storeDoc.toObject();
+    return store
 }
