@@ -1,15 +1,10 @@
-- make the add product page
-- make the add category
-- make the add category API
-- make the get category API
-- make the add product API
-
-- make the all products page
-- make the get all products API
 - update the add new product page to update the existing product 
+- make the edit product API
+- make the delete product button work
+- make the delete product API
+
 - make the add new a components for reuse 
 
-- make the all products page
 - make the store public front page
 
 - make store dashoard, all product page, add product page

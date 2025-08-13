@@ -9,7 +9,7 @@ export async function POST(req: Request, context: { params: { slug: string } }) 
         const user = await getCurrentUser();
         if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-        const { slug } = context.params;
+        const { slug } = await context.params;
         const store = await getStoreDeatilsBySlug(slug)
         if (!store) return NextResponse.json({ error: "Store not found" }, { status: 404 });
 
@@ -35,4 +35,25 @@ export async function POST(req: Request, context: { params: { slug: string } }) 
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 
+}
+
+export async function GET(req:Request,
+    context:{params:{slug:string}}
+) {
+    try{
+        const user = await getCurrentUser();
+        if(!user) return NextResponse.json({error:"Unauthorized"},{status:401});
+
+        const {slug} = await context.params;
+        const store = await getStoreDeatilsBySlug(slug);
+        if(!store) return NextResponse.json({error:"Store not found "},{status:404});
+
+        const products = await Product.find({store:store._id}).lean().exec();
+        return NextResponse.json({products},{status:201});
+
+    }catch(error){
+        console.error(error);
+        return NextResponse.json({error:"Internal server error"},{status:500});
+    }
+    
 }

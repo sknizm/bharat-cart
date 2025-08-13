@@ -24,3 +24,13 @@ export interface CategoryType {
   _id: string,
   name: string
 }
+
+export interface ProductType {
+  _id:string,
+  name:string,
+  description:string,
+  price:number,
+  salePrice:number,
+  images:string[],
+  categories:string[]
+}
