@@ -1,12 +1,13 @@
-- make image-bucket
-- make the get all images UI and API
-- make the upload and delete UI
-- make the upload and delete API
-- make the fetch image api
-- make the upload and delete api
-
-
 - make the add product page
+- make the add category
+- make the add category API
+- make the get category API
+- make the add product API
+
+- make the all products page
+- make the get all products API
+- update the add new product page to update the existing product 
+- make the add new a components for reuse 
 
 - make the all products page
 - make the store public front page

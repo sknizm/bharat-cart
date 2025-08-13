@@ -19,3 +19,8 @@ export interface ImageType {
   _id: string;
   url: string;
 };
+
+export interface CategoryType {
+  _id: string,
+  name: string
+}
