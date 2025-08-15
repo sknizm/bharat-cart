@@ -1,13 +1,12 @@
 "use client"
-import { Badge } from '@/components/ui/badge'
+import BouncingDotsLoader from '@/components/ui/bounce-loader'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuContent } from '@/components/ui/dropdown-menu'
+import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useStore } from '@/lib/context/store-context'
 import { ProductType } from '@/lib/types'
-import { Loader2, MoreHorizontal, Pencil, Plus, Trash2 } from 'lucide-react'
+import {  Pencil, Plus, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -24,6 +23,9 @@ const Products = () => {
     getAllProducts()
   }, []);
 
+  const handleDelete = async ()=>{
+    
+  }
   const getAllProducts = async () => {
     try {
       setIsLoading(true);
@@ -61,9 +63,8 @@ const Products = () => {
       <Card>
         {
           isLoading?
-          <div className='w-full flex items-center justify-center'>
-            <Loader2 className=' text-green-600 w-8 h-8 animate-spin'/>
-          </div>:
+          <BouncingDotsLoader/>
+          :
           <CardContent>
           <div className="rounded-md border">
             <Table>
@@ -116,6 +117,9 @@ const Products = () => {
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Button
+                              onClick={()=>{
+                                router.push(`/${store.slug}/dashboard/products/add-new/${product._id}`)
+                              }}
                               variant={'outline'}
                               className=' w-8 h-8 p-1 mr-2'
                             > <Pencil className=' text-blue-600' />
@@ -129,6 +133,7 @@ const Products = () => {
                         <Tooltip >
                           <TooltipTrigger asChild>
                             <Button
+                            onClick={handleDelete}
                               variant={'outline'}
                               className=' w-8 h-8 p-1 mr-2 '
                             >

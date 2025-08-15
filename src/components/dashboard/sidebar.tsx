@@ -13,13 +13,13 @@ export function DashboardSidebar(){
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "All Products",
     url: `/${slug}/dashboard/products`,
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: `/${slug}/dashboard/home`,
+    title: "All Media",
+    url: `/${slug}/dashboard/media`,
     icon: Calendar,
   },
   {
