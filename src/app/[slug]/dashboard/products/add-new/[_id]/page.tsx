@@ -1,12 +1,10 @@
 import AddUpdateProduct from "../AddUpdateProduct";
 
-type PageProps = {
-  params: {
-    _id: string;
-  };
-};
-
-export default function UpdateProduct({ params }: PageProps) {
+export default function UpdateProduct({
+  params,
+}: {
+  params: { _id: string };
+}) {
   const { _id } = params;
   return <AddUpdateProduct _id={_id} />;
 }
