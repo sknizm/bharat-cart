@@ -1,8 +1,12 @@
 import AddUpdateProduct from "../AddUpdateProduct"
+type PageProps = {
+  params: {
+    _id: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
-const UpdateProduct = async ({params}:{params:{_id:string}}) =>{
-    const {_id} = await params;
-return <AddUpdateProduct _id={_id}/>
+export default function UpdateProduct({ params }: PageProps) {
+  const { _id } = params;
+  return <AddUpdateProduct _id={_id} />;
 }
-
-export default UpdateProduct
