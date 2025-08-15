@@ -1,8 +1,12 @@
-import AddUpdateProduct from "../AddUpdateProduct"
+import AddUpdateProduct from "../AddUpdateProduct";
 
-const UpdateProduct = async ({params}:{params:{_id:string}}) =>{
-    const {_id} = params;
-return <AddUpdateProduct _id={_id}/>
+type PageProps = {
+  params: {
+    _id: string;
+  };
+};
+
+export default function UpdateProduct({ params }: PageProps) {
+  const { _id } = params;
+  return <AddUpdateProduct _id={_id} />;
 }
-
-export default UpdateProduct
