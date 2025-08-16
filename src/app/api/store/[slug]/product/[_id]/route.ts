@@ -4,17 +4,17 @@ import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request,
-    context: { params: { _id: string } }
+  { params }: { params: { slug: string; _id: string } }
 ) {
     try {
-        const { _id } = context.params;
+        const { _id } = params;
 
         await connectDB();
         const product = await Product.findById(_id).lean().exec();
 
         if (!product) return NextResponse.json({ error: "Product not found" }, { status: 404 });
 
-        return NextResponse.json({ product }, { status: 201 });
+        return NextResponse.json({ product }, { status: 200 });
 
     } catch (error) {
         console.error(error);
@@ -24,13 +24,13 @@ export async function GET(req: Request,
 }
 
 export async function PUT(req: Request,
-    context: { params: { _id: string } }
+  { params }: { params: { slug: string; _id: string } }
 ) {
     try {
         const user = await getCurrentUser();
         if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-        const { _id } = context.params;
+        const { _id } = params;
         const { name, description, price, salePrice, categories, images } = await req.json();
 
         const product = await Product.findByIdAndUpdate({ _id }, {
