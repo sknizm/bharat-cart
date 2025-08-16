@@ -4,12 +4,16 @@ import { getCurrentUser } from "@/lib/queries/user";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, context: { params: { slug: string } }) {
+export async function POST(req: Request, 
+    
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any 
+) {
     try {
         const user = await getCurrentUser();
         if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-        const { slug } = await context.params;
+        const { slug } =  context.params;
         const store = await getStoreDeatilsBySlug(slug)
         if (!store) return NextResponse.json({ error: "Store not found" }, { status: 404 });
 
@@ -38,13 +42,14 @@ export async function POST(req: Request, context: { params: { slug: string } }) 
 }
 
 export async function GET(req:Request,
-    context:{params:{slug:string}}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any 
 ) {
     try{
         const user = await getCurrentUser();
         if(!user) return NextResponse.json({error:"Unauthorized"},{status:401});
 
-        const {slug} = await context.params;
+        const {slug} = context.params;
         const store = await getStoreDeatilsBySlug(slug);
         if(!store) return NextResponse.json({error:"Store not found "},{status:404});
 
