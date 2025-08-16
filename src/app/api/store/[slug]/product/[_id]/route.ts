@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    { params }: { params: any }
+    params: any
 ) {
     try {
         const {_id} =  params;
