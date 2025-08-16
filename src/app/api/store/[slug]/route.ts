@@ -9,7 +9,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(
     req: Request,
-    context: { params: { slug: string } }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
 ) {
     try {
         await connectDB(); // connect to MongoDB
