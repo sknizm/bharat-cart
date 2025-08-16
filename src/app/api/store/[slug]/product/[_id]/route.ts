@@ -4,10 +4,11 @@ import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request,
-    { params }: { params: { _id: string } }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { params }: { params: any }
 ) {
     try {
-        const _id = await params._id;
+        const {_id} =  params;
 
         await connectDB();
         const product = await Product.findById(_id).lean().exec();
@@ -24,13 +25,14 @@ export async function GET(req: Request,
 }
 
 export async function PUT(req: Request,
-    context: { params: { _id: string } }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params: any
 ) {
    try{
      const user = await getCurrentUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { _id } = await context.params;
+    const { _id } = params;
     const { name, description, price, salePrice, categories, images } = await req.json();
 
     const product = await Product.findByIdAndUpdate({ _id }, {
