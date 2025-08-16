@@ -121,7 +121,7 @@ const Products = () => {
                           <TableCell className="font-medium">{product.name}</TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
-                              {product.salePrice > 0 ? (
+                              {product.salePrice && product.salePrice  > 0 ? (
                                 <>
                                   <span className="text-gray-500 line-through">
                                     ${Number(product.price).toFixed(2)}
