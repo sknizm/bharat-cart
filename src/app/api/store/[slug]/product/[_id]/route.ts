@@ -4,8 +4,8 @@ import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
 ) {
     try {
         const { _id } = context.params;
@@ -25,8 +25,8 @@ export async function GET(req: Request,
 }
 
 export async function PUT(req: Request,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
 ) {
     try {
         const user = await getCurrentUser();
@@ -51,4 +51,26 @@ export async function PUT(req: Request,
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 
+}
+
+export async function DELETE(req: Request,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
+) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+        const { _id } = context.params
+        await connectDB();
+        const product = await Product.findById(_id);
+        if (!product) return NextResponse.json({ error: "Product not found" }, { status: 404 });
+
+        await Product.findByIdAndDelete(_id);
+
+        return NextResponse.json({ success: true }, { status: 201 })
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    }
 }

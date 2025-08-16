@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useStore } from '@/lib/context/store-context'
 import { CategoryType } from '@/lib/types'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -31,6 +31,10 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
   const [newCategoryLoading, setNewCategoryLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isProductLoading, setIsProductLoading] = useState(false);
+
+  const handleImageDelete = (url:string) =>{
+    setImages(prev=>prev.filter((i)=> i!== url))
+  }
 
   const toogleCategory = (id: string) => {
     setSelectedCategories((prev) => prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id])
@@ -172,6 +176,12 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
 
                       <div key={i} className=' relative w-40 h-40 rounded-md overflow-hidden'>
                         <Image src={url} alt='product' fill objectFit='object-cover' />
+                        <Button 
+                        variant={'outline'}
+                        className=' absolute top-2 right-2'
+                        onClick={()=>handleImageDelete(url)}>
+                          <Trash2 className='w-4 h-4 text-red-600'/>
+                        </Button>
                       </div>
                     ))}
 
@@ -285,8 +295,8 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
               onClick={handleAddProduct}>
               {isLoading ? <>
                 <Loader2 className=' w-4 h-4 animate-spin mr-2' />
-                {isEditMode ? "Creating Product" : "Updating Product"}
-              </> : <>{isEditMode ? "Add Product" : "Update Product"}</>}
+                {isEditMode ?  "Updating Product":"Creating Product"}
+              </> : <>{isEditMode ? "Update Product":"Add Product"}</>}
             </Button>
 
           </div>
