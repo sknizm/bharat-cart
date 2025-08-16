@@ -1,0 +1,62 @@
+import { ProductType } from "@/lib/types"
+import { Button } from "../ui/button"
+import { ShoppingCart } from "lucide-react"
+import Image from "next/image"
+
+export function ProductCard({ product }: { product: ProductType }) {
+    const imageUrl = product.images?.[0] ?? '/placeholder-product.jpg'
+    const hasSale = product.salePrice !== undefined && product.salePrice !== product.price
+
+    return (
+        <div className="group relative bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
+            {/* Product Image Container - Perfect Square */}
+            <div className="relative aspect-square bg-gray-50 overflow-hidden">
+                {/* Sale Badge */}
+                {hasSale && (
+                    <span className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+                        SALE
+                    </span>
+                )}
+
+                {/* Product Image using next/image */}
+                <Image
+                    src={imageUrl}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    placeholder={product.images?.length > 0 ? undefined : 'empty'}
+                />
+            </div>
+               
+            {/* Product Info */}
+            <div className="p-3 space-y-1.5">
+                <h3 className="font-medium text-gray-900 truncate">
+                    {product.name}
+                </h3>
+
+                {/* Price Section */}
+                <div className="flex items-center gap-2">
+                    <p className={`text-base font-bold ${hasSale ? 'text-green-600' : 'text-gray-900'}`}>
+                        ${(product.salePrice || product.price).toFixed(2)}
+                    </p>
+                    {hasSale && (
+                        <p className="text-xs text-gray-400 line-through">
+                            ${product.price.toFixed(2)}
+                        </p>
+                    )}
+                </div>
+
+                {/* Add to Cart Button */}
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full mt-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                </Button>
+            </div>
+        </div>
+    )
+}

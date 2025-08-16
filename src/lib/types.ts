@@ -28,9 +28,9 @@ export interface CategoryType {
 export interface ProductType {
   _id:string,
   name:string,
-  description:string,
+  description?:string,
   price:number,
-  salePrice:number,
+  salePrice?:number,
   images:string[],
   categories:string[]
 }

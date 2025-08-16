@@ -137,7 +137,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
             images: images,
             price: price,
             salePrice: salePrice,
-            categories: categories
+            categories: selectedCategories
           })
         });
 

@@ -3,6 +3,7 @@ import { model, models, Schema } from "mongoose";
 const StoreSchema = new Schema({
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
+    description: { type: String, default:null },
     domain: { type: String, unique: true, sparse: true, default: null },
     membership: { type: Schema.Types.ObjectId, ref: "Membership", default: null },
     banner: { type: [Object], default: [] },
