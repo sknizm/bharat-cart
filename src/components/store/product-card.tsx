@@ -3,15 +3,17 @@ import { Button } from "../ui/button"
 import { CircleCheck, ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useCart } from "@/lib/context/cart-context";
+import { formatIndianCurrency } from "@/lib/utils";
 
 export function ProductCard({ product, quantity }: { product: ProductType, quantity: number }) {
 
-    const { addToCart, removeFromCart } = useCart();
+    const { addToCart, getQuantity } = useCart();
     const imageUrl = product.images?.[0] ?? '/placeholder-product.jpg'
     const hasSale = product.salePrice !== undefined && product.salePrice !== product.price
 
-
     const addItemToCart = (_id: string, name: string, price: number) => {
+        const quantity = getQuantity(_id);
+        if(quantity !== 1)
         addToCart({ _id: _id, name, price, })
     }
 
@@ -46,11 +48,11 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
                 {/* Price Section */}
                 <div className="flex items-center gap-2">
                     <p className={`text-base font-bold ${hasSale ? 'text-green-600' : 'text-gray-900'}`}>
-                        ${(product.salePrice || product.price).toFixed(2)}
+                        ₹{formatIndianCurrency((product.salePrice || product.price).toFixed(2))}
                     </p>
                     {hasSale && (
                         <p className="text-xs text-gray-400 line-through">
-                            ${product.price.toFixed(2)}
+                            ₹{formatIndianCurrency(product.price.toFixed(2))}
                         </p>
                     )}
                 </div>

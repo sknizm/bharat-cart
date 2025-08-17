@@ -8,3 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function copyToClipBoard(text: string) {
   navigator.clipboard.writeText(text);
 }
+
+export function formatIndianCurrency(amount: number | string): string {
+  const num = Number(amount);
+  if (isNaN(num)) return String(amount);
+  return num.toLocaleString("en-IN");
+}
