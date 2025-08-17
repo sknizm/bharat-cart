@@ -1,11 +1,19 @@
 import { ProductType } from "@/lib/types"
 import { Button } from "../ui/button"
-import { ShoppingCart } from "lucide-react"
+import { CircleCheck, ShoppingCart } from "lucide-react"
 import Image from "next/image"
+import { useCart } from "@/lib/context/cart-context";
 
-export function ProductCard({ product }: { product: ProductType }) {
+export function ProductCard({ product, quantity }: { product: ProductType, quantity: number }) {
+
+    const { addToCart, removeFromCart } = useCart();
     const imageUrl = product.images?.[0] ?? '/placeholder-product.jpg'
     const hasSale = product.salePrice !== undefined && product.salePrice !== product.price
+
+
+    const addItemToCart = (_id: string, name: string, price: number) => {
+        addToCart({ _id: _id, name, price, })
+    }
 
     return (
         <div className="group relative bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
@@ -28,7 +36,7 @@ export function ProductCard({ product }: { product: ProductType }) {
                     placeholder={product.images?.length > 0 ? undefined : 'empty'}
                 />
             </div>
-               
+
             {/* Product Info */}
             <div className="p-3 space-y-1.5">
                 <h3 className="font-medium text-gray-900 truncate">
@@ -49,12 +57,22 @@ export function ProductCard({ product }: { product: ProductType }) {
 
                 {/* Add to Cart Button */}
                 <Button
+                    onClick={() => {
+                        const price = product.salePrice ? product.salePrice : product.price;
+                        addItemToCart(product._id, product.name, price)
+                    }}
                     variant="outline"
                     size="sm"
                     className="w-full mt-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                 >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
+                    {quantity > 0 ?
+                        <> <CircleCheck className="w-4 h-4 mr-2 text-green-600" />
+                            Added to Cart
+                        </>
+
+                        : <>
+                            <ShoppingCart className="w-4 h-4 mr-2" />
+                            Add to Cart</>}
                 </Button>
             </div>
         </div>

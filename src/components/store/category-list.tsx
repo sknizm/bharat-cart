@@ -12,8 +12,8 @@ type Props = {
 }
 
 export function CategoryList({ products, categories }: Props) {
-  
-    const {cartItems, addToCart} = useCart();
+
+  const { getQuantity } = useCart();
   // Explicitly type filteredCategories
   const filteredCategories: CategoryType[] = categories.filter(cat =>
     products.some(p => p.categories.includes(cat._id))
@@ -81,9 +81,10 @@ export function CategoryList({ products, categories }: Props) {
             >
               <h2 className="text-2xl font-bold">{category.name}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {categoryProducts.map(product => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
+                {categoryProducts.map(product => {
+                  const quantity = getQuantity(product._id)
+                  return (<ProductCard quantity={quantity} key={product._id} product={product} />)
+                })}
               </div>
             </section>
           )
