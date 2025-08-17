@@ -1,4 +1,5 @@
 import NotFound from "@/components/ui/store-not-found";
+import { CartProvider } from "@/lib/context/cart-context";
 import { StoreProvider } from "@/lib/context/store-context";
 import { getStoreDeatilsBySlug } from "@/lib/queries/store";
 
@@ -14,10 +15,13 @@ export default async function StoreLayout(
   }
 
   return (
-    <StoreProvider store={store}>
-      <div className="min-h-screen">
-        {children}
-      </div>
-    </StoreProvider>
+    <CartProvider>
+      <StoreProvider store={store}>
+        <div className="min-h-screen">
+          {children}
+        </div>
+      </StoreProvider>
+    </CartProvider>
+
   );
 }

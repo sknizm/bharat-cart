@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import Logout from '@/components/ui/logout-button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getCurrentUser } from '@/lib/queries/user'
 import { StoreType } from '@/lib/types'
 import { Plus, LinkIcon, ExternalLink, LayoutDashboard, StoreIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -81,7 +80,7 @@ export default function StoreList() {
 
 
   return (
-    <div className="min-w-screen mx-auto lg:p-0 md:p-6 space-y-6 min-h-screen">
+    <div className="min-w-screen mx-auto p-4 md:p-2 space-y-6 min-h-screen">
       {/* Header Section */}
       <div className="pb-4 md:p-6 flex mx-0 flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b">
         <div className="space-y-1">

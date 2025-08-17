@@ -4,6 +4,7 @@ import { useRef } from "react"
 import { Button } from "../ui/button"
 import { ProductCard } from "./product-card"
 import { ProductType, CategoryType } from "@/lib/types"
+import { useCart } from "@/lib/context/cart-context"
 
 type Props = {
   products: ProductType[]
@@ -11,6 +12,8 @@ type Props = {
 }
 
 export function CategoryList({ products, categories }: Props) {
+  
+    const {cartItems, addToCart} = useCart();
   // Explicitly type filteredCategories
   const filteredCategories: CategoryType[] = categories.filter(cat =>
     products.some(p => p.categories.includes(cat._id))

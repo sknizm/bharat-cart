@@ -8,27 +8,27 @@ import { useStore } from '@/lib/context/store-context';
 import React, { useEffect, useState } from 'react'
 
 const Store = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [storeName, setStoreName] = useState("");
-  const [storeDescription, setStoreDescription] = useState("");
   const store = useStore();
 
   useEffect(() => {
     getStoreData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
   const getStoreData = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(`/api/store/${store.slug}`)
 
       const data = await res.json();
       setProducts(data.products)
       setCategories(data.categories)
       setStoreName(data.store.name)
-      console.log("STORE DATA", data)
       if (!res.ok) {
         return <div>Try Again </div>
       }
@@ -36,6 +36,7 @@ const Store = () => {
       console.log(error);
 
     } finally {
+      setIsLoading(false);
 
     }
   }
