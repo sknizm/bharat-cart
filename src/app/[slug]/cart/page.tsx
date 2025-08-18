@@ -26,7 +26,7 @@ const CartPage = () => {
                 <Button
                     onClick={() => router.push(`/${store.slug}`)}
                 >
-                    Go to Menu
+                    Go back to Store
                 </Button>
             </div>
         );

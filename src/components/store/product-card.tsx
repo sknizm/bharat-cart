@@ -4,23 +4,31 @@ import { CircleCheck, ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useCart } from "@/lib/context/cart-context";
 import { formatIndianCurrency } from "@/lib/utils";
+import { useStore } from "@/lib/context/store-context";
+import { useRouter } from "next/navigation";
 
 export function ProductCard({ product, quantity }: { product: ProductType, quantity: number }) {
 
     const { addToCart, getQuantity } = useCart();
+    const store = useStore();
+    const router = useRouter();
     const imageUrl = product.images?.[0] ?? '/placeholder-product.jpg'
     const hasSale = product.salePrice !== undefined && product.salePrice !== product.price
 
+
+    const goToProductPage = () => {
+        router.push(`/${store.slug}/product/${product._id}`);
+    }
     const addItemToCart = (_id: string, name: string, price: number) => {
         const quantity = getQuantity(_id);
-        if(quantity !== 1)
-        addToCart({ _id: _id, name, price, })
+        if (quantity !== 1)
+            addToCart({ _id: _id, name, price, })
     }
 
     return (
         <div className="group relative bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
             {/* Product Image Container - Perfect Square */}
-            <div className="relative aspect-square bg-gray-50 overflow-hidden">
+            <div onClick={goToProductPage} className="relative aspect-square bg-gray-50 overflow-hidden">
                 {/* Sale Badge */}
                 {hasSale && (
                     <span className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
@@ -41,12 +49,12 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
 
             {/* Product Info */}
             <div className="p-3 space-y-1.5">
-                <h3 className="font-medium text-gray-900 truncate">
+                <h3 onClick={goToProductPage} className="font-medium text-gray-900 truncate">
                     {product.name}
                 </h3>
 
                 {/* Price Section */}
-                <div className="flex items-center gap-2">
+                <div onClick={goToProductPage} className="flex items-center gap-2">
                     <p className={`text-base font-bold ${hasSale ? 'text-green-600' : 'text-gray-900'}`}>
                         ₹{formatIndianCurrency((product.salePrice || product.price).toFixed(2))}
                     </p>

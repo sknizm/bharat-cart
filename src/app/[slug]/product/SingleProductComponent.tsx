@@ -2,31 +2,33 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Star, ShoppingCart, Heart, Share2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShoppingCart, Share2, CircleCheck, Copy } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-// import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProductType } from '@/lib/types';
 import { useCart } from '@/lib/context/cart-context';
+import { copyToClipBoard, shareText } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 
-export function SingleProductComponent({ product }: {product: ProductType}) {
+export function SingleProductComponent({ product }: { product: ProductType }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const {addToCart} = useCart();
+  const { addToCart, getQuantity } = useCart();
+  const quantity = getQuantity(product._id);
+
+  const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${usePathname()}`;
 
   const hasSale = product.salePrice && product.salePrice < product.price;
   const mainImage = product.images[selectedImageIndex] || '/placeholder-product.jpg';
 
   const nextImage = () => {
-    setSelectedImageIndex((prev) => 
+    setSelectedImageIndex((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setSelectedImageIndex((prev) => 
+    setSelectedImageIndex((prev) =>
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
@@ -45,17 +47,17 @@ export function SingleProductComponent({ product }: {product: ProductType}) {
               className="object-cover"
               priority
             />
-            
+
             {/* Navigation Arrows */}
             {product.images.length > 1 && (
               <>
-                <button 
+                <button
                   onClick={prevImage}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                   onClick={nextImage}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
                 >
@@ -66,7 +68,7 @@ export function SingleProductComponent({ product }: {product: ProductType}) {
 
             {/* Sale Badge */}
             {hasSale && (
-              <Badge variant="destructive" className="absolute top-2 left-2">
+              <Badge variant="default" className="absolute top-2 left-2 bg-green-600">
                 Sale
               </Badge>
             )}
@@ -79,11 +81,10 @@ export function SingleProductComponent({ product }: {product: ProductType}) {
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
-                  className={`relative aspect-square rounded-md overflow-hidden border-2 ${
-                    selectedImageIndex === index 
-                      ? 'border-primary' 
-                      : 'border-transparent'
-                  }`}
+                  className={`relative aspect-square rounded-md overflow-hidden border-2 ${selectedImageIndex === index
+                    ? 'border-primary'
+                    : 'border-transparent'
+                    }`}
                 >
                   <Image
                     src={image}
@@ -101,95 +102,49 @@ export function SingleProductComponent({ product }: {product: ProductType}) {
         <div className="space-y-6">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 text-yellow-500">
-                <Star className="w-4 h-4 fill-current" />
-                <span className="text-sm font-medium">4.8</span>
-              </div>
-              <span className="text-sm text-gray-500">(42 reviews)</span>
-            </div>
+            <p className=' text-left'>{product.description}</p>
           </div>
 
           {/* Price */}
           <div className="space-y-2">
             {hasSale ? (
               <>
-                <span className="text-3xl font-bold text-destructive">
+                <span className="text-2xl font-bold ">
                   ${product.salePrice?.toFixed(2)}
                 </span>
-                <span className="text-lg text-gray-500 line-through ml-2">
+                <span className="text-md text-gray-500 line-through ml-2">
                   ${product.price.toFixed(2)}
                 </span>
-                { product.salePrice &&<Badge variant="outline" className="ml-2">
+                {product.salePrice && <Badge variant="outline" className="ml-2">
                   {Math.round((1 - product.salePrice / product.price) * 100)}% OFF
                 </Badge>}
               </>
             ) : (
-              <span className="text-3xl font-bold">
+              <span className="text-2xl font-bold">
                 ${product.price.toFixed(2)}
               </span>
             )}
           </div>
 
-          {/* Store Info */}
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray-500">Sold by:</span>
-            <span className="font-medium">{product.name}</span>
-          </div>
 
-          {/* Categories */}
-          <div className="flex flex-wrap gap-2">
-            {product.categories.map((category, index) => (
-              <Badge key={index} variant="secondary">
-                {category}
-              </Badge>
-            ))}
-          </div>
-
-          {/* Quantity Selector */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">Quantity:</span>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              >
-                <span className="sr-only">Decrease quantity</span>
-                -
-              </Button>
-              {/* <Input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => {setQuantity(Math.max(1, parseInt(e.target.value) || 1)}
-
-                }
-                className="w-16 text-center"
-              /> */}
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setQuantity(quantity + 1)}
-              >
-                {/* <span className="sr-only">Increase quantity</span> */}
-                +
-              </Button>
-            </div>
-          </div>
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button onClick={()=>{
-              addToCart({_id:product._id, name:product.name, price:product.price});
+            <Button onClick={() => {
+              addToCart({ _id: product._id, name: product.name, price: product.price });
             }} size="lg" className="flex-1 gap-2">
-              <ShoppingCart className="w-5 h-5" />
-              Add to Cart
+              {quantity > 0 ?
+                <>
+                  <CircleCheck className=' w-5 h-5 text-green-600' />
+                  Added to Cart
+                </>
+                : <><ShoppingCart className="w-5 h-5" />
+                  Add to Cart</>}
             </Button>
-            <Button variant="outline" size="icon">
-              <Heart className="w-5 h-5" />
+            <Button onClick={() => copyToClipBoard(currentUrl)} variant="outline" size="icon">
+              <Copy className="w-5 h-5" />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button onClick={()=>shareText(currentUrl)} variant="outline" size="icon">
               <Share2 className="w-5 h-5" />
             </Button>
           </div>

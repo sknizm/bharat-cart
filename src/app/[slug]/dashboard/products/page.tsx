@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { useStore } from '@/lib/context/store-context'
 import { ProductType } from '@/lib/types'
 import { AlertDialog, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog'
-import { Loader2, Pencil, Plus, Trash2 } from 'lucide-react'
+import { Eye, Loader2, Pencil, Plus, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -137,6 +137,23 @@ const Products = () => {
                           </TableCell>
                           <TableCell className="text-right">
                             <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  disabled={!!productDeleteId}
+                                  onClick={() => {
+                                    router.push(`/${store.slug}/product/${product._id}`)
+                                  }}
+                                  variant={'outline'}
+                                  className=' w-8 h-8 p-1 mr-2'
+                                > <Eye className='' />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>View Product</p>
+                              </TooltipContent>
+                            </Tooltip>
+
+                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button
                                   disabled={!!productDeleteId}
