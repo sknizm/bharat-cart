@@ -16,7 +16,7 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
   const { addToCart, getQuantity } = useCart();
   const quantity = getQuantity(product._id);
 
-  const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${usePathname()}`;
+  const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}${usePathname()}`;
 
   const hasSale = product.salePrice && product.salePrice < product.price;
   const mainImage = product.images[selectedImageIndex] || '/placeholder-product.jpg';

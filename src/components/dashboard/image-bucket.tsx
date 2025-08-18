@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Skeleton } from '../ui/skeleton';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { ScrollArea } from '../ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { useStore } from '@/lib/context/store-context';
@@ -128,8 +128,9 @@ export function ImageBucket({  onSelect }: ImageBucketProps) {
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <ImageIcon className="w-5 h-5" />
-                        Image Bucket
+                        Your Media Library
                     </DialogTitle>
+                    <DialogDescription>Manage all your uploaded media files in one place</DialogDescription>
                 </DialogHeader>
 
                 <div className="flex-1 flex flex-col gap-4">

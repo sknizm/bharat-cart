@@ -7,7 +7,7 @@ export default async function StoreLayout(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { children, params }: { children: React.ReactNode; params: any }
 ) {
-  const { slug } = params; // ✅ Await the params
+  const { slug } = params; 
   const store = await getStoreDeatilsBySlug(slug);
 
   if (!store) {
