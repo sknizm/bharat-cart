@@ -27,10 +27,10 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect("https://2cd.site/not-found");
     }
 
-    const store = await res.json();
+    const data = await res.json();
 
     // rewrite → /[slug]/whatever
-    url.pathname = `/${store.slug}${url.pathname}`;
+    url.pathname = `/${data.store.slug}${url.pathname}`;
     return NextResponse.rewrite(url);
   } catch (err) {
     console.error("Middleware error:", err);

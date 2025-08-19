@@ -1,5 +1,4 @@
 import { connectDB } from "@/lib/mongoose";
-import { getStoreDeatilsBySlug } from "@/lib/queries/store";
 import Category from "@/models/Category";
 import Product from "@/models/Product";
 import Store from "@/models/Store";
