@@ -9,7 +9,6 @@ export default async function StoreLayout(
 ) {
   const { slug } = params; 
   const store = await getStoreDeatilsBySlug(slug);
-
   if (!store) {
     return <NotFound />;
   }
