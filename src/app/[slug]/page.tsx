@@ -11,7 +11,11 @@ const Store = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const [storeName, setStoreName] = useState("");
+  const [storeData, setStoreData] = useState({
+    name:'',
+    description:'',
+    logo:''
+  });
   const store = useStore();
 
   useEffect(() => {
@@ -28,7 +32,12 @@ const Store = () => {
       const data = await res.json();
       setProducts(data.products)
       setCategories(data.categories)
-      setStoreName(data.store.name)
+      console.log("DATA-Store", data)
+      setStoreData({
+        name: data.store.name,
+        description: data.store.description,
+        logo:data.store.logo
+      })
       if (!res.ok) {
         return <div>Try Again </div>
       }
@@ -62,9 +71,9 @@ const Store = () => {
 
         :
         <div className='min-h-screen w-full bg-gray-50'>
-          <Header />
+          <Header logo={storeData.logo} />
           <main className='container mx-auto px-4 py-6 space-y-6'>
-            <Banner name={storeName} />
+            <Banner name={storeData.name} description={storeData.description}/>
             <CategoryList products={products} categories={categories} />
 
           </main>

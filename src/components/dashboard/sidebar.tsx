@@ -3,6 +3,7 @@ import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { Sidebar, SidebarContent,  SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Badge } from "../ui/badge";
 
 export function DashboardSidebar(){
   const { slug } = useParams()
@@ -21,16 +22,13 @@ export function DashboardSidebar(){
     title: "All Media",
     url: `/${slug}/dashboard/media`,
     icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: `/${slug}/dashboard/home`,
-    icon: Search,
+    badge:"",
   },
   {
     title: "Settings",
-    url: `/${slug}/dashboard/home`,
+    url: `/${slug}/dashboard/setting`,
     icon: Settings,
+    badge:"Latest",
   },
 ]
     return(
@@ -45,7 +43,7 @@ export function DashboardSidebar(){
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="flex items-center justify-center">{item.title} {item.badge && (<Badge className=" text-xs bg-green-600 ml-2">{item.badge}</Badge>)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

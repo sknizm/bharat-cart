@@ -1,17 +1,16 @@
 "use client"
 import { Search, ShoppingBag } from "lucide-react";
-import Logo from "../ui/logo";
 import { useEffect, useState } from "react";
 import { useCart } from "@/lib/context/cart-context";
 import { useStore } from "@/lib/context/store-context";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-export function Header() {
+export function Header({ logo }: { logo?: string }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const { cartItems } = useCart();
   const store = useStore();
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -30,8 +29,16 @@ export function Header() {
         : "bg-white"}
     `}>
       {
-        store.logo ?
-          <Logo />
+        logo ?
+          <div className="relative h-full w-auto aspect-square">
+            <Image
+              src={logo}
+              alt={store.name}
+              fill
+              className="object-contain p-2"
+              sizes="(max-width: 768px) 50px, 64px"
+            />
+          </div>
           :
           <div className="flex items-center text-center justify-center px-4 py-2 bg-green-100 rounded-4xl max-w-40">
             <span className=" text-sm font-extrabold tracking-tight text-black">
@@ -56,7 +63,7 @@ export function Header() {
         ">
           <ShoppingBag className="w-5 h-5 text-gray-700" />
           {cartItems.length > 0 ? <span className="
-            absolute -top-1 -right-1 bg-indigo-600 text-white 
+            absolute -top-1 -right-1 bg-green-600 text-white 
             text-xs w-5 h-5 flex items-center justify-center 
             rounded-full
           ">

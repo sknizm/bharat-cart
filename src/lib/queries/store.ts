@@ -56,7 +56,9 @@ export async function getStoreDeatilsBySlug(slug: string) {
         slug: storeDoc.slug,
         name: storeDoc.name,
         domain: storeDoc.name,
-        logo:storeDoc.logo
+        logo:storeDoc.logo,
+        description:storeDoc.description,
+        favicon:storeDoc.favicon
     }
     return store
 }

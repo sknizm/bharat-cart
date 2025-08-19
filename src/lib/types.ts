@@ -11,9 +11,10 @@ export interface StoreType {
   _id: string;
   name: string;
   slug: string;
-  domain: string | null;
-  logo: string | null;
-  // Add any other fields you need
+  domain?: string ;
+  logo?: string ;
+  description?: string ;
+  favicon?: string ;
 };
 export interface ImageType {
   _id: string;

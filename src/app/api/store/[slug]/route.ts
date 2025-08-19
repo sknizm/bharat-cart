@@ -17,7 +17,7 @@ export async function GET(
 
         const { slug } = context.params;
 
-        const store = await getStoreDeatilsBySlug(slug);
+        const store = await Store.findOne({slug});
 
         if (!store) {
             return NextResponse.json(
@@ -48,4 +48,27 @@ export async function GET(
             { status: 500 }
         );
     }
+}
+
+
+export async function PUT(req: Request) {
+    try {
+        const body = await req.json();
+        await connectDB();
+
+        const result = await Store.updateOne({
+            _id: body._id
+        }, {
+            $set: body
+        });
+
+        if (result.matchedCount === 0) return NextResponse.json({ error: "Store not found" }, { status: 404 });
+
+        return NextResponse.json({ success: true }, { status: 201 });
+
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    }
+
 }
