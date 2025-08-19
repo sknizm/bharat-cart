@@ -22,7 +22,6 @@ const CustomDomainPage = () => {
     const nameservers = [
         "ns1.vercel-dns.com",
         "ns2.vercel-dns.com",
-        "ns3.vercel-dns.com",
     ];
 
     useEffect(() => {
