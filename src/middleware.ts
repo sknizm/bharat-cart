@@ -9,8 +9,8 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   // ✅ Allow platform routes (signup, signin, store-list etc.)
-  if (PUBLIC_PATHS.includes(url.pathname)) {
-    return NextResponse.next();
+  if (PUBLIC_PATHS.includes(url.pathname)) {    
+      return NextResponse.redirect(`https://2cd.site${PUBLIC_PATHS}`);
   }
 
   // ✅ Local development should bypass custom domain handling

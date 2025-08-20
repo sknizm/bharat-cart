@@ -1,4 +1,18 @@
-- make the payment gateway integrations
+- correct the domain routing 
+
+- make the customer, order and payment model(also for User)
+- make the customer signin, signup, dashboard page
+- make the customer session 
+- make the customer payment and order page
+
+- make the orders and payments page in user dashboard
+- make the API for it 
+
+- make the razor pay payment code
+- integrate it in ecom store
+
+- make the order page
+
 
 - make the check membership option
 
