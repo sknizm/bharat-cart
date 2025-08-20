@@ -11,11 +11,6 @@ const Store = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const [storeData, setStoreData] = useState({
-    name:'',
-    description:'',
-    logo:''
-  });
   const store = useStore();
 
   useEffect(() => {
@@ -27,17 +22,12 @@ const Store = () => {
   const getStoreData = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/store/${store.slug}`)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store/${store.slug}`)
 
       const data = await res.json();
       setProducts(data.products)
       setCategories(data.categories)
       console.log("DATA-Store", data)
-      setStoreData({
-        name: data.store.name,
-        description: data.store.description,
-        logo:data.store.logo
-      })
       if (!res.ok) {
         return <div>Try Again </div>
       }
@@ -73,7 +63,7 @@ const Store = () => {
         <div className='min-h-screen w-full bg-gray-50'>
           <Header />
           <main className='container mx-auto px-4 py-6 space-y-6'>
-            <Banner name={storeData.name} description={storeData.description}/>
+            <Banner name={store.name} description={store.description}/>
             <CategoryList products={products} categories={categories} />
 
           </main>
