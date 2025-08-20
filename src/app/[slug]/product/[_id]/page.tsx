@@ -21,7 +21,7 @@ const SingleProductPage = () => {
         const getProductDetails = async () => { 
             try {
                 setIsLoading(true);
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store/${store.slug}/product/${_id}`);
+                const res = await fetch(`/api/store/${store.slug}/product/${_id}`);
                 const data = await res.json();
                 if (res.ok) {
                     setProduct(data.product)

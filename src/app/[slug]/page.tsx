@@ -22,7 +22,7 @@ const Store = () => {
   const getStoreData = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store/${store.slug}`)
+      const res = await fetch(`/api/store/${store.slug}`)
 
       const data = await res.json();
       setProducts(data.products)
