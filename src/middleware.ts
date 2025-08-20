@@ -34,9 +34,11 @@ export async function middleware(req: NextRequest) {
     }
 
     const data = await res.json();
+    // Only prepend slug if it's not already in the path
+    if (!url.pathname.startsWith(`/${data.store.slug}`)) {
+      url.pathname = `/${data.store.slug}${url.pathname}`;
+    }
 
-    // rewrite → /[slug]/whatever
-    url.pathname = `/${data.store.slug}${url.pathname}`;
     return NextResponse.rewrite(url);
   } catch (err) {
     console.error("Middleware error:", err);
