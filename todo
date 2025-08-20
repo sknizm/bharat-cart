@@ -1,5 +1,3 @@
-- correct the domain routing 
-
 - make the customer, order and payment model(also for User)
 - make the customer signin, signup, dashboard page
 - make the customer session 
