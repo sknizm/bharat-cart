@@ -8,13 +8,18 @@ export async function middleware(req: NextRequest) {
   const hostname = req.headers.get("host") || "";
   const url = req.nextUrl;
 
-  // ✅ Allow platform routes (signup, signin, store-list etc.)
-  if (PUBLIC_PATHS.includes(url.pathname)) {    
-      return NextResponse.redirect(`https://2cd.site${PUBLIC_PATHS}`);
+  // ✅ Only allow PUBLIC_PATHS on main domain (2cd.site)
+  if ((hostname === "2cd.site" || hostname === "www.2cd.site") && PUBLIC_PATHS.includes(url.pathname)) {
+    return NextResponse.next(); // allow directly on 2cd.site
   }
 
-  // ✅ Local development should bypass custom domain handling
-  if (hostname.includes("2cd.site")) {
+  // 🚫 If someone tries PUBLIC_PATHS on a custom domain → redirect to 2cd.site
+  if (PUBLIC_PATHS.includes(url.pathname)) {
+    return NextResponse.redirect(`https://2cd.site${url.pathname}`);
+  }
+
+  // ✅ Local dev should bypass custom domain handling
+  if (hostname.includes("2cd.site") || hostname.includes("localhost")) {
     return NextResponse.next();
   }
 
@@ -23,6 +28,7 @@ export async function middleware(req: NextRequest) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/store/domain/${hostname}`
     );
+
     if (!res.ok) {
       return NextResponse.redirect("https://2cd.site/not-found");
     }
