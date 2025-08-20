@@ -1,3 +1,4 @@
+import { corsResponse } from "@/lib/cors";
 import { connectDB } from "@/lib/mongoose";
 import { getCurrentUser } from "@/lib/queries/user";
 import Product from "@/models/Product";
@@ -15,11 +16,11 @@ export async function GET(req: Request,
 
         if (!product) return NextResponse.json({ error: "Product not found" }, { status: 404 });
 
-        return NextResponse.json({ product }, { status: 200 });
+        return corsResponse(NextResponse.json({ product }, { status: 200 }));
 
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+        return corsResponse(NextResponse.json({ error: "Internal server error" }, { status: 500 }));
     }
 
 }

@@ -1,3 +1,4 @@
+import { corsResponse } from "@/lib/cors";
 import { connectDB } from "@/lib/mongoose";
 import Category from "@/models/Category";
 import Product from "@/models/Product";
@@ -31,7 +32,7 @@ export async function GET(
         const categories = await Category.find({ store: store._id })
             .select("_id name").lean().exec();
 
-        return NextResponse.json(
+        const res = NextResponse.json(
             {
                 success: true,
                 store,
@@ -40,6 +41,7 @@ export async function GET(
             },
             { status: 200 }
         );
+        return corsResponse(res)
     } catch (error) {
         console.error("Error fetching store:", error);
         return NextResponse.json(
