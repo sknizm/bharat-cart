@@ -1,3 +1,6 @@
+import { CustomerDashboardHeader } from "@/components/customer/header";
+import { CustomerDashboardSidebar } from "@/components/customer/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { getCurrentCustomer } from "@/lib/queries/customer";
 import { redirect } from "next/navigation";
 
@@ -12,8 +15,12 @@ export default async function CustomerDashboardLayout(
     const customer = await getCurrentCustomer();
     if (!customer) redirect(`/${slug}/signin`)
     return (
-        <div>
-            {children}
-        </div>
+       <SidebarProvider>
+        <CustomerDashboardSidebar />
+            <div className="min-h-screen bg-gray-100 w-full">
+                <CustomerDashboardHeader />
+                {children}
+            </div>
+       </SidebarProvider>
     )
 }
