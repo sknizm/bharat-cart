@@ -71,7 +71,7 @@ const Store = () => {
 
         :
         <div className='min-h-screen w-full bg-gray-50'>
-          <Header logo={storeData.logo} />
+          <Header />
           <main className='container mx-auto px-4 py-6 space-y-6'>
             <Banner name={storeData.name} description={storeData.description}/>
             <CategoryList products={products} categories={categories} />

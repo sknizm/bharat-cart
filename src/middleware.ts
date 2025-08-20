@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   // ✅ Only allow PUBLIC_PATHS on main domain (2cd.site)
-  if ((hostname === "2cd.site" || hostname === "www.2cd.site") && PUBLIC_PATHS.includes(url.pathname)) {
+  if ((hostname === "2cd.site" || hostname === "localhost:3000" || hostname === "www.2cd.site") && PUBLIC_PATHS.includes(url.pathname)) {
     return NextResponse.next(); // allow directly on 2cd.site
   }
 

@@ -6,7 +6,7 @@ import { useStore } from "@/lib/context/store-context";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export function Header({ logo }: { logo?: string }) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const { cartItems } = useCart();
@@ -29,10 +29,10 @@ export function Header({ logo }: { logo?: string }) {
         : "bg-white"}
     `}>
       {
-        logo ?
+        store.logo ?
           <div className="relative h-full w-auto aspect-square">
             <Image
-              src={logo}
+              src={store.logo}
               alt={store.name}
               fill
               className="object-contain p-2"
