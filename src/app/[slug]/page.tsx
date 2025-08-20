@@ -27,7 +27,7 @@ const Store = () => {
       const data = await res.json();
       setProducts(data.products)
       setCategories(data.categories)
-      console.log("DATA-Store", data)
+      
       if (!res.ok) {
         return <div>Try Again </div>
       }

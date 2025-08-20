@@ -1,4 +1,5 @@
 export const SESSION_COOKIE_NAME = 'bharat-cart-session-token'
+export const CUSTOMER_SESSION_COOKIE_NAME = 'bharat-cart-customer-session-token'
 
 
 export interface UserType {
@@ -41,4 +42,11 @@ export interface CartItemType{
   name:string,
   price:number,
   quantity:number
+}
+
+
+export interface CustomerType {
+  _id: string,
+  email: string
+  password?: string
 }

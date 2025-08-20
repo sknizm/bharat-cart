@@ -1,5 +1,5 @@
 import { corsResponse } from "@/lib/cors";
-import { checkIfCustomerAlreadyExist, createCustomer } from "@/lib/queries/customer";
+import { checkIfCustomerAlreadyExist, createCustomer, createCustomerSession } from "@/lib/queries/customer";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -16,7 +16,8 @@ export async function POST(req: Request) {
         if (!customer)
             return corsResponse(NextResponse.json({ error: "Failed to create account" }, { status: 401 }));
 
-        return corsResponse(NextResponse.json({success:true},{status:201}))
+        await createCustomerSession(customer._id);
+        return corsResponse(NextResponse.json({ success: true }, { status: 201 }))
     } catch (error) {
         console.error(error);
         return corsResponse(NextResponse.json({ error: "Internal server error" }, { status: 500 }))

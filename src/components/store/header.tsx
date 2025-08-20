@@ -1,13 +1,16 @@
 "use client"
-import { Search, ShoppingBag } from "lucide-react";
+import { PersonStanding, ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCart } from "@/lib/context/cart-context";
 import { useStore } from "@/lib/context/store-context";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useCustomer } from "@/lib/context/customer-context";
+import { Button } from "../ui/button";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const customer = useCustomer();
   const router = useRouter();
   const { cartItems } = useCart();
   const store = useStore();
@@ -47,12 +50,25 @@ export function Header() {
       }
 
       <div className="flex items-center justify-end gap-4">
-        <button className="
+       <div>
+        {
+          customer?  <button className="
           p-2 rounded-full hover:bg-gray-100 transition-colors
           focus:outline-none focus:ring-2 focus:ring-gray-300
         ">
-          <Search className="w-5 h-5 text-gray-700" />
-        </button>
+          <PersonStanding className="w-5 h-5 text-gray-700" />
+        </button>:
+        <Button
+        variant={'outline'}
+        onClick={()=>{
+          router.push(`/${store.slug}/signin`)
+        }}
+        >
+          Login
+        </Button>
+         
+        }
+       </div>
 
         <button onClick={() => {
           router.push(`/${store.slug}/cart`)
