@@ -1,5 +1,5 @@
 import { model, models, Schema } from "mongoose";
-
+ 
 const StoreSchema = new Schema({
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -14,6 +14,7 @@ const StoreSchema = new Schema({
     products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
     images: [{ type: Schema.Types.ObjectId, ref: "Image" }],
+    customers:[{type:Schema.Types.ObjectId, ref:"Customer"}]
 
 })
 

@@ -1,7 +1,19 @@
-- make the customer, order and payment model(also for User)
+
+
+- make the signup page
+- make the signup API
+- make the sign page
+- make the sign API
+
+- make the customer session model
+- make the session queries
+- add it into signup and signin
+
 - make the customer signin, signup, dashboard page
 - make the customer session 
 - make the customer payment and order page
+
+- make the order and payment model(also for User)
 
 - make the orders and payments page in user dashboard
 - make the API for it 
