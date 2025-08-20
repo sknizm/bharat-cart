@@ -5,6 +5,10 @@ import Product from "@/models/Product";
 import Store from "@/models/Store";
 import { NextResponse } from "next/server";
 
+export async function OPTIONS() {
+  // Respond to preflight with empty 204 but include CORS headers
+  return corsResponse(new NextResponse(null, { status: 204 }));
+}
 
 
 export async function GET(
@@ -20,10 +24,10 @@ export async function GET(
         const store = await Store.findOne({slug});
 
         if (!store) {
-            return NextResponse.json(
+            return corsResponse(NextResponse.json(
                 { error: "Store not found", store: false },
                 { status: 404 }
-            );
+            ));
         }
         const products = await Product.find({ store: store._id })
             .select("name price images categories")
@@ -32,7 +36,8 @@ export async function GET(
         const categories = await Category.find({ store: store._id })
             .select("_id name").lean().exec();
 
-        const res = NextResponse.json(
+        
+        return corsResponse(NextResponse.json(
             {
                 success: true,
                 store,
@@ -40,14 +45,13 @@ export async function GET(
                 categories
             },
             { status: 200 }
-        );
-        return corsResponse(res)
+        ))
     } catch (error) {
         console.error("Error fetching store:", error);
-        return NextResponse.json(
+        return corsResponse(NextResponse.json(
             { error: "Internal Server Error" },
             { status: 500 }
-        );
+        ));
     }
 }
 

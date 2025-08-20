@@ -4,6 +4,11 @@ import { getCurrentUser } from "@/lib/queries/user";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
+export async function OPTIONS() {
+  // Respond to preflight with empty 204 but include CORS headers
+  return corsResponse(new NextResponse(null, { status: 204 }));
+}
+
 export async function GET(req: Request,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any
