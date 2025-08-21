@@ -29,16 +29,16 @@ export function CustomerDashboardSidebar() {
     },
   ]
   return (
-    <Sidebar>
-      <SidebarContent>
+    <Sidebar >
+      <SidebarContent className="bg-green-600">
         <SidebarGroup>
-          <SidebarGroupLabel>My Dashboard</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl text-white mb-3">My Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                <SidebarMenuItem  key={item.title}>
+                  <SidebarMenuButton className="bg-black text-white py-4" asChild>
+                    <Link className="py-4" href={item.url}>
                       <item.icon />
                       <span className="flex items-center justify-center">{item.title} {item.badge && 
                       (<Badge className={`${pathname.endsWith(item.url)?"hidden":""} text-xs   bg-green-600 ml-2`}>{item.badge}</Badge>)}</span>

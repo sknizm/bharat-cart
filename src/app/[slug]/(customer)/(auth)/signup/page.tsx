@@ -37,7 +37,7 @@ const SignUp = () => {
         const data = await res.json();
       if (res.ok) {
         toast.success("Profile created Successfully")
-        // router.push('/store-list')
+        router.push(`/${store.slug}/customer-dashboard/account`)
 
       } else {
         setErrorMessage(data.error)

@@ -40,7 +40,7 @@ const SignIn = () => {
 
       if (res.ok) {
         toast.success("Login Successful");
-        // router.push('/store-list')
+        router.push(`/${store.slug}/customer-dashboard/account`)
       } else {
         setErrorMessage(data.error)
       }
