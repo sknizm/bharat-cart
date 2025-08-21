@@ -1,3 +1,4 @@
+import { corsResponse } from "@/lib/cors";
 import { connectDB } from "@/lib/mongoose";
 import Customer from "@/models/Customer";
 import { NextResponse } from "next/server";
@@ -18,11 +19,10 @@ export async function POST(req: Request) {
             postalCode: 1
         }).lean().exec();
 
-        return NextResponse.json({ customer })
-
+        return corsResponse(NextResponse.json({ customer }));
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+        return corsResponse(NextResponse.json({ error: "Internal server error" }, { status: 500 }));
     }
 }
 
@@ -40,10 +40,10 @@ export async function PUT(req: Request) {
 
         if (result.matchedCount === 0) return NextResponse.json({ error: "No customer found" }, { status: 404 })
 
-        return NextResponse.json({ success: true }, { status: 201 })
+        return corsResponse(NextResponse.json({ success: true }, { status: 201 }));
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+        return corsResponse(NextResponse.json({ error: "Internal server error" }, { status: 500 }))
     }
 
 }
