@@ -1,9 +1,17 @@
 
 
-- make the customer myaccount details page 
-- make the customer myaccount details page API
 
-- make the order model
+** made the order api and page
+
+- fix the order incomplete details issue
+
+- make the order view page for customer and user
+
+
+- add the check user button in cart page
+- add cartItems ? cart page : dashoard
+
+
 - make the payment model
 - make the customer my orders page
 - make the customer my orders page API
