@@ -96,7 +96,7 @@ const CustomDomainPage = () => {
                 </div>
             ) : (
                 <Card className="shadow-lg border-gray-200 overflow-hidden">
-                    <CardHeader className="bg-gradient-to-r from-green-50 to-green-50 px-6 py-5 border-b">
+                    <CardHeader className="px-6 py-5 border-b">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-green-100 rounded-lg">
                                 <Globe2 className="h-6 w-6 text-green-600" />

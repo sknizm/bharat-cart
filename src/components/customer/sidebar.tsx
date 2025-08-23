@@ -23,24 +23,24 @@ export function CustomerDashboardSidebar() {
       icon: Inbox,
       badge: ""
     },
-    {
-      title: "Payment Methods",
-      url: `/${slug}/customer-dashboard/payments`,
-      icon: CreditCard,
-      badge: ""
-    },
-    {
-      title: "Settings",
-      url: `/${slug}/customer-dashboard/settings`,
-      icon: Settings,
-      badge: ""
-    },
+    // {
+    //   title: "Payment Methods",
+    //   url: `/${slug}/customer-dashboard/payments`,
+    //   icon: CreditCard,
+    //   badge: ""
+    // },
+    // {
+    //   title: "Settings",
+    //   url: `/${slug}/customer-dashboard/settings`,
+    //   icon: Settings,
+    //   badge: ""
+    // },
   ];
 
   const isActive = (url: string) => {
     return pathname === url;
   };
-
+ 
   return (
     <Sidebar className="border-r-0">
       <SidebarContent className="bg-gradient-to-b from-green-600 to-emerald-700 min-h-screen">
@@ -110,7 +110,7 @@ export function CustomerDashboardSidebar() {
         </SidebarGroup>
 
         {/* Additional section for secondary actions */}
-        <div className="mt-8 px-6">
+        {/* <div className="mt-8 px-6">
           <div className="border-t border-emerald-500/30 pt-6">
             <SidebarMenu>
               <SidebarMenuItem>
@@ -125,7 +125,7 @@ export function CustomerDashboardSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </div>
-        </div>
+        </div> */}
       </SidebarContent>
     </Sidebar>
   );

@@ -2,13 +2,13 @@
 import { AlertDialogHeader, AlertDialogFooter } from '@/components/ui/alert-dialog'
 import BouncingDotsLoader from '@/components/ui/bounce-loader'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useStore } from '@/lib/context/store-context'
 import { ProductType } from '@/lib/types'
 import { AlertDialog, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog'
-import { Eye, Loader2, Pencil, Plus, Trash2 } from 'lucide-react'
+import { Box, Eye, Loader2, Pencil, Plus, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -73,16 +73,29 @@ const Products = () => {
 
   }
   return (
-    <div className="max-w-6xl mx-auto p-1 md:p-6 space-y-6">
-      <div className="flex p-4 md:p-0 justify-between items-center">
-        <h1 className="text-2xl font-bold">Products</h1>
-        <Button disabled={!!productDeleteId} onClick={() => router.push(`/${store.slug}/dashboard/products/add-new`)}>
-          <Plus className=' w-4 h-4 mr-2' />
-          Add Product
-        </Button>
-      </div>
-
+    <div className="max-w-6xl mx-auto md:p-4 space-y-6">
       <Card>
+        <CardHeader className="px-6 py-5 border-b">
+          <div className='flex items-center justify-between'>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Box className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl text-gray-800">
+                  All Products
+                </CardTitle>
+                <CardDescription className="text-gray-600 mt-1">
+                  Add and Update all your products here
+                </CardDescription>
+              </div>
+            </div>
+            <Button disabled={!!productDeleteId} onClick={() => router.push(`/${store.slug}/dashboard/products/add-new`)}>
+              <Plus className=' w-4 h-4 mr-2' />
+              Add Product
+            </Button>
+          </div>
+        </CardHeader>
         {
           isLoading ?
             <BouncingDotsLoader />
@@ -121,7 +134,7 @@ const Products = () => {
                           <TableCell className="font-medium">{product.name}</TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
-                              {product.salePrice && product.salePrice  > 0 ? (
+                              {product.salePrice && product.salePrice > 0 ? (
                                 <>
                                   <span className="text-gray-500 line-through">
                                     ${Number(product.price).toFixed(2)}
@@ -153,7 +166,7 @@ const Products = () => {
                               </TooltipContent>
                             </Tooltip>
 
-                             <Tooltip>
+                            <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button
                                   disabled={!!productDeleteId}

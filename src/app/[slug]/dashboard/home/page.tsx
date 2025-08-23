@@ -6,12 +6,13 @@ import { Input } from '@/components/ui/input'
 import { useStore } from '@/lib/context/store-context';
 import { copyToClipBoard } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react'
+import { useRouter } from 'next/navigation';
 import React from 'react'
-import { toast } from 'sonner';
 
 
 const Home = () => {
-  const store = useStore()
+  const store = useStore();
+  const router = useRouter();
   const storeLink = store ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/${store.slug}` : '';
 
 
@@ -70,7 +71,7 @@ const Home = () => {
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <Button
-                onClick={() => { }}
+                onClick={() => { router.push(`/${store.slug}/dashboard/products`) }}
                 className="gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-all"
               >
                 Add Products
@@ -94,7 +95,7 @@ const Home = () => {
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <Button
-                onClick={() => { }}
+                onClick={() => { router.push(`/${store.slug}/dashboard/setting`) }}
                 className="gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-all"
               >
                 Edit Store Details
@@ -103,9 +104,6 @@ const Home = () => {
             </div>
           </CardContent>
         </Card>
-        <ImageBucket onSelect={(url:string)=>{
-          toast.message(url)
-        }}/>
       </div>
     </div>
   )
