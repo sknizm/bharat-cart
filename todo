@@ -1,9 +1,10 @@
 
+- make the orders page for store owners (like the image)
+- make the get Orders API
+- make the change order status API
 
 
-** made the order api and page
-
-- fix the order incomplete details issue
+- make the order page for customer
 
 - make the order view page for customer and user
 

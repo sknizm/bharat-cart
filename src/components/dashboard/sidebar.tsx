@@ -26,6 +26,11 @@ export function DashboardSidebar() {
       badge: "",
     },
     {
+      title: "All Orders",
+      url: `/${slug}/dashboard/orders`,
+      icon: Inbox,
+    },
+    {
       title: "Custom Domain",
       url: `/${slug}/dashboard/domain`,
       icon: Calendar,

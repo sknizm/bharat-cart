@@ -50,3 +50,17 @@ export interface CustomerType {
   email: string
   password?: string
 }
+
+export interface OrderType {
+  _id: string;
+  customer: string;
+  customerEmail?: string;
+  type:string;
+  store?: string;
+  items:[],
+  details:any,
+  amount: number;
+  status: string;
+  paymentStatus: string;
+  createdAt: string;
+}

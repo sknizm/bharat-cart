@@ -36,7 +36,7 @@ const CheckoutPage = () => {
         state: "",
         postalCode: ""
     });
- 
+
     const [order, setOrder] = useState<any>(null)
 
     const handleOrderCreation = async () => {
@@ -51,10 +51,10 @@ const CheckoutPage = () => {
                 body: JSON.stringify(order)
             });
 
-            if(res.ok){
+            if (res.ok) {
                 // redirect to thank u page
-            }else{
-            toast.error("Failed to create Order");
+            } else {
+                toast.error("Failed to create Order");
             }
         } catch {
             toast.error("Failed to create Order");
@@ -74,7 +74,6 @@ const CheckoutPage = () => {
                     body: JSON.stringify({ email: customer?.email })
                 });
                 const data = await res.json();
-                console.log("CHECKOUT", data)
                 if (res.ok) {
                     setCustomerData(data.customer)
                 }
@@ -100,9 +99,11 @@ const CheckoutPage = () => {
         if (!customer || !store) return
         setOrder({
             customer: customer._id,
+            customerEmail: customer.email,
+            type: tab,
             store: store._id,
             amount: total,
-            items: cartItems.map((item) => item._id),
+            items: cartItems,
             details: customerData,
             status: "processing",
             paymentStatus: "unpaid"
