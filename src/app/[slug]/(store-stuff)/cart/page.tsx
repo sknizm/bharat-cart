@@ -28,7 +28,7 @@ const CartPage = () => {
                 <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4 text-center">
                     <ShoppingCart className="w-16 h-16 text-gray-300" />
                     <h2 className="text-2xl font-semibold text-gray-700">Your cart is empty!</h2>
-                    <p className="text-gray-500 max-w-sm">Looks like you haven't added any items to your cart yet. Go ahead and explore our store.</p>
+                    <p className="text-gray-500 max-w-sm">Looks like you haven&apos;t added any items to your cart yet. Go ahead and explore our store.</p>
                     <Button
                         onClick={() => router.push(`/${store.slug}`)}
                         className="mt-2 text-white bg-blue-600 hover:bg-blue-700"

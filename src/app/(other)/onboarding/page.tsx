@@ -45,7 +45,7 @@ const Onboarding = () => {
             
 
 
-        } catch (error) {
+        } catch {
             setErrorMessage("Internal Server Error")
         } finally {
             setIsLoading(false)

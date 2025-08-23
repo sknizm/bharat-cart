@@ -58,6 +58,7 @@ export interface OrderType {
   type:string;
   store?: string;
   items:[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   details:any,
   amount: number;
   status: string;

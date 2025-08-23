@@ -1,15 +1,15 @@
 "use client";
-import { Calendar, Home, Inbox, Settings, User, ChevronRight, Box, ShoppingCart, Globe, BarChart3, CreditCard } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import { Home, Inbox, Settings, User, ChevronRight, Box, ShoppingCart, Globe, CreditCard } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
-export function DashboardSidebar() { 
+export function DashboardSidebar() {
   const { slug } = useParams()
   const pathname = usePathname();
-  
+
   const items = [
     {
       title: "Dashboard",
@@ -82,8 +82,8 @@ export function DashboardSidebar() {
                       asChild
                       className={cn(
                         "mx-4 rounded-lg mb-1 transition-all duration-200",
-                        active 
-                          ? "bg-black text-white shadow-md" 
+                        active
+                          ? "bg-black text-white shadow-md"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       )}
                     >
@@ -97,8 +97,8 @@ export function DashboardSidebar() {
                           {item.badge && (
                             <Badge className={cn(
                               "ml-auto text-xs px-1.5 py-0.5 min-w-[20px] flex justify-center",
-                              active 
-                                ? "bg-white text-black" 
+                              active
+                                ? "bg-white text-black"
                                 : "bg-gray-200 text-gray-800"
                             )}>
                               {item.badge}
@@ -118,7 +118,7 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-       
+
 
       </SidebarContent>
     </Sidebar>

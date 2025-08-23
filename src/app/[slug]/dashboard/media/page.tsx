@@ -1,9 +1,7 @@
 "use client"
 import ImageBucket from "@/components/dashboard/image-bucket"
-import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardContent, CardDescription, CardTitle } from "@/components/ui/card" // Assuming you're using shadcn/ui or similar
-import { Inbox, Plus } from "lucide-react"
-import router from "next/router"
+import { Inbox } from "lucide-react"
 
 const AllMedia = () => {
   return (

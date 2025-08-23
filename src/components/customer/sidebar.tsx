@@ -1,6 +1,6 @@
 "use client";
-import { CreditCard, Home, Inbox, User, Settings, LogOut, ChevronRight } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import { Inbox, User, ChevronRight } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { Badge } from "../ui/badge";
@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export function CustomerDashboardSidebar() {
   const { slug } = useParams()
   const pathname = usePathname();
-  
+
   const items = [
     {
       title: "Account Details",
@@ -40,7 +40,7 @@ export function CustomerDashboardSidebar() {
   const isActive = (url: string) => {
     return pathname === url;
   };
- 
+
   return (
     <Sidebar className="border-r-0">
       <SidebarContent className="bg-gradient-to-b from-green-600 to-emerald-700 min-h-screen">
@@ -69,8 +69,8 @@ export function CustomerDashboardSidebar() {
                       asChild
                       className={cn(
                         "mx-4 py-2 rounded-xl mb-2 transition-all duration-200",
-                        active 
-                          ? "bg-white/10 text-white shadow-lg" 
+                        active
+                          ? "bg-white/10 text-white shadow-lg"
                           : "text-emerald-100 hover:bg-white/5 hover:text-white"
                       )}
                     >
@@ -78,8 +78,8 @@ export function CustomerDashboardSidebar() {
                         <div className="flex items-center gap-3 py-3">
                           <div className={cn(
                             "p-2 rounded-lg transition-colors",
-                            active 
-                              ? "bg-emerald-500 text-white" 
+                            active
+                              ? "bg-emerald-500 text-white"
                               : "bg-white/10 text-emerald-100"
                           )}>
                             <item.icon className="h-3 w-3" />
@@ -88,8 +88,8 @@ export function CustomerDashboardSidebar() {
                           {item.badge && (
                             <Badge className={cn(
                               "ml-auto text-xs px-1.5 py-0.5 min-w-[20px] flex justify-center",
-                              active 
-                                ? "bg-white text-emerald-700" 
+                              active
+                                ? "bg-white text-emerald-700"
                                 : "bg-emerald-500 text-white"
                             )}>
                               {item.badge}

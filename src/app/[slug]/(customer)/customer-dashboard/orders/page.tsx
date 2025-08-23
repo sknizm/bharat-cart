@@ -33,7 +33,7 @@ const CustomerOrderPage = () => {
         }
 
         getAllCustomerOrders();
-    }, [])
+    }, [customer?._id])
 
     return (
         <div className="p-4">
@@ -132,7 +132,9 @@ const CustomerOrderPage = () => {
                                                                 </TableRow>
                                                             </TableHeader>
                                                             <TableBody>
-                                                                {order.items?.map((item: any, idx: number) => (
+                                                                {order.items?.map((
+                                                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                                                    item: any, idx: number) => (
                                                                     <TableRow key={idx} className="border-t">
                                                                         <TableCell className="py-3">
                                                                             {item.name || "Unnamed Product"}

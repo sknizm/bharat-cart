@@ -78,7 +78,7 @@ export async function POST(
       return NextResponse.json({ error: "Store not found" }, { status: 404 });
 
     await connectDB();
-    const image = await Image.create({ url: imageUrl, store: store._id });
+    await Image.create({ url: imageUrl, store: store._id });
 
     return NextResponse.json(
       { message: "Image uploaded successfully", url: imageUrl },

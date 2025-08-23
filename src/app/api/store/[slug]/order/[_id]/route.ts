@@ -4,6 +4,7 @@ import Order from "@/models/Order";
 import { NextResponse } from "next/server"
 
 export async function PUT(req: Request,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any
 ) {
     try {

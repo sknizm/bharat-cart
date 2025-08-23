@@ -37,6 +37,7 @@ const CheckoutPage = () => {
         postalCode: ""
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [order, setOrder] = useState<any>(null)
 
     const handleOrderCreation = async () => {
@@ -108,7 +109,7 @@ const CheckoutPage = () => {
             status: "processing",
             paymentStatus: "unpaid"
         })
-    }, [customer, store, total, cartItems, customerData])
+    }, [customer, store, total, cartItems, customerData, tab])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

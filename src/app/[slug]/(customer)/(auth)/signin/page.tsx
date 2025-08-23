@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import CustomTextLogo from '@/components/ui/custom-logo';
 import ErrorIcon from '@/components/ui/error-icon';
 import { Input } from '@/components/ui/input'
-import Logo from '@/components/ui/logo'
 import { useStore } from '@/lib/context/store-context';
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'

@@ -41,17 +41,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
   }
 
   useEffect(() => {
-    setIsProductLoading(true);
-    getAllCategory();
-    if (isEditMode) {
-      getProductDetails()
-    } else {
-      setIsProductLoading(false);
-
-    }
-  }, [isEditMode, _id])
-
-
+    
   const getProductDetails = async () => {
     try {
       const res = await fetch(`/api/store/${store.slug}/product/${_id}`);
@@ -72,6 +62,19 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
       toast.error("Internal server error")
     }
   }
+
+    setIsProductLoading(true);
+    getAllCategory();
+    if (isEditMode) {
+      getProductDetails()
+    } else {
+      setIsProductLoading(false);
+
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, _id])
+
+
   const addNewCategory = async () => {
     try {
       setNewCategoryLoading(true);

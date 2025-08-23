@@ -114,6 +114,7 @@ export function ImageBucket({  onSelect }: ImageBucketProps) {
         if (open) {
             fetchImages();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
     return (

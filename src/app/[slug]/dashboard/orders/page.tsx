@@ -296,20 +296,20 @@ const AllOrdersPage = () => {
                             {hasChanges(order._id) && (
                               <>
                                 <Button
-                                
-                                disabled={changingOrder !== ''}
+
+                                  disabled={changingOrder !== ''}
                                   size="sm"
                                   variant="ghost"
                                   className="h-8 w-8 p-0 text-green-600 hover:text-green-700 hover:bg-green-100"
                                   onClick={() => saveChanges(order._id)}
                                 >
                                   {
-                                    changingOrder === order._id ? <Loader2 className="w-4 h-4 animate-spin"/>:
-                                    <Save className="h-4 w-4" />
+                                    changingOrder === order._id ? <Loader2 className="w-4 h-4 animate-spin" /> :
+                                      <Save className="h-4 w-4" />
                                   }
                                 </Button>
                                 <Button
-                                disabled={changingOrder !== ''}
+                                  disabled={changingOrder !== ''}
                                   size="sm"
                                   variant="ghost"
                                   className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
@@ -410,7 +410,9 @@ const AllOrdersPage = () => {
                                       </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                      {order.items?.map((item: any, idx: number) => (
+                                      {order.items?.map((
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                        item: any, idx: number) => (
                                         <TableRow key={idx} className="border-t">
                                           <TableCell className="py-3">
                                             {item.name || "Unnamed Product"}

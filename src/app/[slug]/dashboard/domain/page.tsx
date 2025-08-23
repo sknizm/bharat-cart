@@ -2,11 +2,10 @@
 import BouncingDotsLoader from "@/components/ui/bounce-loader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import ErrorIcon from "@/components/ui/error-icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStore } from "@/lib/context/store-context"
-import { CircleCheck, Copy, Globe2, Loader2 } from "lucide-react"
+import {   Globe2, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -25,6 +24,7 @@ const CustomDomainPage = () => {
     ];
 
     useEffect(() => {
+        
         if (store.domain) {
             setIsLoading(false);
             setDomain(store.domain || "");
@@ -32,6 +32,26 @@ const CustomDomainPage = () => {
 
         }
     }, [store.domain])
+
+    
+    const isDomainVerified = async () => {
+        try {
+            const res = await fetch(
+                `https://api.vercel.com/v9/projects/prj_XhQaZRiEAgvnrZwhNuzTa7eeUTRZ/domains/${domain}/verify`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer 3ayUS9paQJqyFmSv0o7e22ba`,
+                    },
+                }
+            );
+            const data = await res.json();
+            setVerified(data.verified)
+        } catch {
+
+        }
+    }
+
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
@@ -53,7 +73,6 @@ const CustomDomainPage = () => {
                 }
             );
             const data = await res.json();
-            console.log("DOMAIN VERCEL", data)
             if (!res.ok) {
                 toast.error("Failed to add Domain")
                 setErrorMessage(data.error)
@@ -70,24 +89,6 @@ const CustomDomainPage = () => {
         }
     }
 
-    const isDomainVerified = async () => {
-        try {
-            const res = await fetch(
-                `https://api.vercel.com/v9/projects/prj_XhQaZRiEAgvnrZwhNuzTa7eeUTRZ/domains/${domain}/verify`,
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer 3ayUS9paQJqyFmSv0o7e22ba`,
-                    },
-                }
-            );
-            const data = await res.json();
-            console.log("VERIFY", data);
-            setVerified(data.verified)
-        } catch {
-
-        }
-    }
     return (
         <div className="p-6 mx-auto">
             {isLoading ? (

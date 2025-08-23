@@ -15,21 +15,20 @@ export default function StoreList() {
 
   useEffect(() => {
 
+    const checkUser = async () => {
+      const res = await fetch(`/api/auth/check-user`);
+      const data = await res.json();
+      if (!data.isUser) {
+        router.push('/signin');
+      } else {
+        fetchStores()
+      }
+    }
 
     checkUser()
 
   }, [router])
 
-  const checkUser = async () => {
-    const res = await fetch(`/api/auth/check-user`);
-    const data = await res.json();
-    console.log("DATAAUTH", data)
-    if (!data.isUser) {
-      router.push('/signin');
-    } else {
-      fetchStores()
-    }
-  }
 
   const fetchStores = async () => {
     try {
