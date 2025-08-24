@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCart } from "@/lib/context/cart-context";
 import { useCustomer } from "@/lib/context/customer-context";
 import { useStore } from "@/lib/context/store-context";
+import { startRazorPayCheckout } from "@/lib/queries/razorpay";
 import { formatIndianCurrency } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -49,11 +50,19 @@ const CheckoutPage = () => {
                     "Content-Type": "application/json"
                 },
                 method: "POST",
-                body: JSON.stringify(order)
+                body: JSON.stringify(order) 
             });
 
             if (res.ok) {
-                // redirect to thank u page
+                const data = await res.json();
+                startRazorPayCheckout({
+                    keyId: data.razorpay.keyId,
+                    razorPayOrderId: data.razorpay.razorPayOrderId,
+                    amount: data.razorpay.amount,
+                    storeName: store.name,
+                    currency: data.razorpay.currency,
+                    slug: store.slug
+                })
             } else {
                 toast.error("Failed to create Order");
             }
@@ -63,6 +72,7 @@ const CheckoutPage = () => {
             setIsCreating(false);
         }
     }
+
     useEffect(() => {
         const getAllCustomerData = async () => {
             try {

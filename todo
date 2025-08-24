@@ -1,9 +1,7 @@
 
-
-- launch the MVP
-- keep the Payment Gateway coming soon...
-- get feedback
-
+- fix the razorpay vverify issue
+- add the razorpay payment gateway
+- make the payment gateway multi tenant
 
 - add the check user button in cart page
 - add cartItems ? cart page : dashoard

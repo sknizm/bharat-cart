@@ -9,6 +9,9 @@ const OrderSchema = new Schema({
     items: {type:[Object],default:null},
     details:{type:Object,default:null},
 
+    razorPayOrderId:{type:String,default:null},
+    razorPayPaymentId:{type:String,default:null},
+
     status: {
         type: String,
         enum: ["processing", "pending", "confirmed", "shipped", "delivered", "cancelled"],
