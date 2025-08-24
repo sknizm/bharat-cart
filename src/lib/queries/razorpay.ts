@@ -29,14 +29,16 @@ export async function startRazorPayCheckout({ keyId,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async function (response: any) {
             // 3. Verify payment
-            await fetch(`/api/store/${slug}/order/verify`, {
+           const res =  await fetch(`/api/store/${slug}/order/verify`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ ...response, razorPayOrderId: razorPayOrderId }),
             });
+            const data = await res.json();
+            console.log("RAZOR RES", data)
         },
     };
-
+ 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rzp = new (window as any).Razorpay(options);
     rzp.open();

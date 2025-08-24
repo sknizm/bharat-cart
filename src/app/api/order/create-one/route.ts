@@ -17,23 +17,23 @@ export async function POST(req: Request) {
             key_secret: process.env.KEY_SECRET
         });
 
-        const razorPay = await razorpay.orders.create({
+        const razorPayOrder = await razorpay.orders.create({
             amount: order.amount * 100,
             currency: "INR",
             receipt: `${order._id}`,
             payment_capture: true,
         });
 
-        order.razorPayOrderId = razorPay.id;
-        await order.save;
+        order.razorPayOrderId = razorPayOrder.id;
+        await order.save();
 
         return corsResponse(NextResponse.json({
             order: order._id,
             razorpay: {
                 keyId: process.env.KEY_ID,
-                razorPayOrderId: razorPay.id,
-                amount: razorPay.amount,
-                currency: razorPay.currency,
+                razorPayOrderId: razorPayOrder.id,
+                amount: razorPayOrder.amount,
+                currency: razorPayOrder.currency,
             },
         }, { status: 201 }));
 

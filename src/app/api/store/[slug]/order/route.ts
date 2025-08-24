@@ -15,7 +15,7 @@ export async function GET(req: Request,
         const store = await getStoreDeatilsBySlug(slug);
         if (!store) return NextResponse.json({ error: "Store not found" }, { status: 404 });
 
-        const orders = await Order.find({ store: store._id }).lean().exec();
+        const orders = await Order.find({ store: store._id }).sort({createdAt:-1}).lean().exec();
 
         return NextResponse.json({ orders })
     } catch (error) {

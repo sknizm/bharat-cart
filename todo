@@ -1,5 +1,5 @@
 
-- fix the razorpay vverify issue
+- fix the razorpay verify issue
 - add the razorpay payment gateway
 - make the payment gateway multi tenant
 
