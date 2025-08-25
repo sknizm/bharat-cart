@@ -14,7 +14,18 @@ const StoreSchema = new Schema({
     products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
     images: [{ type: Schema.Types.ObjectId, ref: "Image" }],
-    customers:[{type:Schema.Types.ObjectId, ref:"Customer"}]
+    customers:[{type:Schema.Types.ObjectId, ref:"Customer"}],
+
+    // payments
+
+    // razorpay
+    razorPayEnabled:{type:Boolean,default:false},
+    razorpayKeyId:{type:String, default:null},
+    razorpayKeySecret:{type:String, default:null},
+
+    // whatsapp store    
+    whatsappOrderEnabled:{type:Boolean,default:false},
+    whatsappNumber:{type:String, default:null},
 
 })
 
