@@ -67,26 +67,28 @@ const AllOrdersPage = () => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [changes, setChanges] = useState<Record<string, { status?: string, paymentStatus?: string }>>({});
 
-  useEffect(() => {
-    const getAllOrders = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(`/api/store/${store.slug}/order`);
+  const getAllOrders = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`/api/store/${store.slug}/order`);
 
-        if (!res.ok) {
-          toast.error("Failed to get all orders");
-        } else {
-          const data = await res.json();
-          console.log("ORDERS", data);
-          setOrders(data.orders);
-        }
-      } catch {
+      if (!res.ok) {
         toast.error("Failed to get all orders");
-      } finally {
-        setIsLoading(false);
+      } else {
+        const data = await res.json();
+        setOrders(data.orders);
       }
-    };
+    } catch {
+      toast.error("Failed to get all orders");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+
     getAllOrders();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.slug]);
 
   const handleUpdate = (
@@ -121,6 +123,7 @@ const AllOrdersPage = () => {
         throw new Error('Failed to update order');
       }
       setChanges({})
+      getAllOrders();
       toast.success("Order updated successfully");
     } catch (error) {
       toast.error("Failed to update order");

@@ -1,26 +1,30 @@
 "use client";
 import BouncingDotsLoader from "@/components/ui/bounce-loader";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch"
-import { CreditCard, MessageCircle } from "lucide-react"
+import { CreditCard, Loader2, MessageCircle } from "lucide-react"
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner";
 
 const PaymentPage = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isChanged, setIsChanged] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { slug } = useParams();
 
   const emptyData = {
-    razorPayEnabled: true,
+    razorPayEnabled: false,
     razorpayKeyId: "",
     razorpayKeySecret: "",
     whatsappNumber: "",
     whatsappOrderEnabled: false,
   };
   const [storeData, setStoreData] = useState(emptyData);
+  const [initialStoreData, setInitialStoreData] = useState(emptyData);
 
   useEffect(() => {
     const getStoreData = async () => {
@@ -36,8 +40,8 @@ const PaymentPage = () => {
           toast.error("Failed to get Details");
         } else {
           const data = await res.json();
-          console.log("SDATA", data)
-          setStoreData(data.store ?? emptyData)
+          setStoreData(data.store ?? emptyData);
+          setInitialStoreData(data.store ?? emptyData);
         }
 
       } catch {
@@ -53,16 +57,49 @@ const PaymentPage = () => {
   }, [slug]);
 
 
+  useEffect(() => {
+    const checkChanges = () => {
+      if (initialStoreData !== storeData) {
+        setIsChanged(true);
+      }
+    }
+    checkChanges();
+  }, [initialStoreData, storeData])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setStoreData((prev) => ({ ...prev, [name]: value }));
   }
 
+  const handleUpdate = async () => {
+    try {
+      setIsUpdating(true);
+      const res = await fetch(`/api/store/${slug}/update-any`, {
+        headers: {
+          "Content-type": "application/json"
+        },
+        method: "PUT",
+        body: JSON.stringify(storeData)
+      });
 
+      if (!res.ok) {
+        toast.error("Failed to update details");
+      } else {
+        toast.success("Updated successfully");
+      }
+    } catch {
+      toast.error("Failed to update");
+    } finally {
+      setIsUpdating(false);
+
+    }
+  }
 
   return (
-    <div className="p-4">
+    <form className="p-4" onSubmit={(e) => {
+      e.preventDefault();
+      handleUpdate();
+    }}>
       <Card>
         <CardHeader className="px-6 py-5">
           <div className="flex items-center justify-between">
@@ -79,6 +116,13 @@ const PaymentPage = () => {
                 </CardDescription>
               </div>
             </div>
+            <Button
+              type="submit"
+              disabled={!isChanged || isUpdating}
+            >{
+                isUpdating ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving Changes</> :
+                  "Save Changes"
+              }</Button>
           </div>
         </CardHeader>
         {
@@ -126,7 +170,9 @@ const PaymentPage = () => {
                           </Label>
                           <Input
                             id="razorpay-key-id"
-                            value={storeData.razorpayKeyId}
+                            name="razorpayKeyId"
+                            required={storeData.razorPayEnabled}
+                            value={storeData.razorpayKeyId ?? ""}
                             onChange={handleInputChange}
                             placeholder="Enter your Razorpay Key ID"
                             className="bg-white"
@@ -140,7 +186,9 @@ const PaymentPage = () => {
                           <Input
                             id="razorpay-key-secret"
                             type="password"
-                            value={storeData.razorpayKeySecret}
+                            name="razorpayKeySecret"
+                            required={storeData.razorPayEnabled}
+                            value={storeData.razorpayKeySecret ?? ""}
                             onChange={handleInputChange}
                             placeholder="Enter your Razorpay Key Secret"
                             className="bg-white"
@@ -179,8 +227,10 @@ const PaymentPage = () => {
                             WhatsApp Number
                           </Label>
                           <Input
+                            required={storeData.whatsappOrderEnabled}
                             id="whatsapp-number"
-                            value={storeData.whatsappNumber}
+                            name="whatsappNumber"
+                            value={storeData.whatsappNumber ?? ""}
                             onChange={handleInputChange}
                             placeholder="Enter your WhatsApp number with country code"
                             className="bg-white"
@@ -197,7 +247,7 @@ const PaymentPage = () => {
             </CardContent>
         }
       </Card>
-    </div>
+    </form>
   )
 }
 export default PaymentPage
