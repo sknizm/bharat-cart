@@ -1,7 +1,11 @@
-
-- fix the razorpay verify issue
-- add the razorpay payment gateway
+- fix all the customer data and details issue
+- fix the order issue
+- complete the payment gateway page in dashboard
 - make the payment gateway multi tenant
+
+
+- make the landing page
+- make the product variant
 
 - add the check user button in cart page
 - add cartItems ? cart page : dashoard

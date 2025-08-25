@@ -12,21 +12,21 @@ export default async function StoreLayout(
   const { slug } = params;
   const store = await getStoreDeatilsBySlug(slug);
   const customer = await getCurrentCustomer();
-  
+
   if (!store) {
     return <NotFound />;
   }
 
   return (
-    <CustomerProvider customer={customer ?? null}>
-      <CartProvider>
-        <StoreProvider store={store}>
+    <CartProvider>
+      <StoreProvider store={store}>
+        <CustomerProvider customer={customer ?? null}>
           <div className="min-h-screen">
             {children}
           </div>
-        </StoreProvider>
-      </CartProvider>
-    </CustomerProvider>
+        </CustomerProvider>
+      </StoreProvider>
+    </CartProvider>
 
 
   );

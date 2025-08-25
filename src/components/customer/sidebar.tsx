@@ -1,14 +1,35 @@
 "use client";
-import { Inbox, User, ChevronRight } from "lucide-react";
+import { Inbox, User, ChevronRight, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { useCustomer } from "@/lib/context/customer-context";
 
 export function CustomerDashboardSidebar() {
-  const { slug } = useParams()
+  const { slug } = useParams();
+  const {refreshCustomer} = useCustomer();
+  const router = useRouter();
   const pathname = usePathname();
+
+  const handleCustomerLogout = async () => {
+    try {
+      const res = await fetch(`/api/customer/auth/signout`);
+
+      if (res.ok) {
+        toast.success("Logout successful")
+      }
+    } catch {
+      toast.error("Logout failed")
+
+    } finally {
+      await refreshCustomer();
+      window.history.replaceState(null, '', '/');
+      router.push(`/${slug}`)
+    }
+  }
 
   const items = [
     {
@@ -110,11 +131,11 @@ export function CustomerDashboardSidebar() {
         </SidebarGroup>
 
         {/* Additional section for secondary actions */}
-        {/* <div className="mt-8 px-6">
+        <div className="mt-8 px-6">
           <div className="border-t border-emerald-500/30 pt-6">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="mx-4 rounded-xl text-emerald-100 hover:bg-white/5 hover:text-white transition-colors">
+                <SidebarMenuButton onClick={handleCustomerLogout} className="mx-4 rounded-xl text-emerald-100 hover:bg-white/5 hover:text-white transition-colors">
                   <div className="flex items-center gap-3 py-3">
                     <div className="p-2 rounded-lg bg-white/10 text-emerald-100">
                       <LogOut className="h-4 w-4" />
@@ -125,7 +146,7 @@ export function CustomerDashboardSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </div>
-        </div> */}
+        </div>
       </SidebarContent>
     </Sidebar>
   );

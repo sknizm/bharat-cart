@@ -1,18 +1,23 @@
 "use client"
 import { useCustomer } from "@/lib/context/customer-context"
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import BouncingDotsLoader from "@/components/ui/bounce-loader";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Clock, Loader2, ShoppingBag, Tag } from "lucide-react";
+import { useCart } from "@/lib/context/cart-context";
+import router from "next/router";
+import { useParams } from "next/navigation";
 
 const AccountPage = () => {
     const customer = useCustomer();
+    const { slug } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [isUpdating, setIsUpdating] = useState(false);
+    const { cartItems } = useCart();
 
     const [customerData, setCustomerData] = useState({
         firstName: "",
@@ -42,7 +47,16 @@ const AccountPage = () => {
                     toast.error("Failed to load Details")
                 } else {
                     const data = await res.json();
-                    setCustomerData(data.customer);
+                    setCustomerData(data.customer ?? {
+                        firstName: "",
+                        lastName: "",
+                        phone: "",
+                        line1: "",
+                        line2: "",
+                        city: "",
+                        state: "",
+                        postalCode: ""
+                    });
                 }
             } catch {
                 toast.error("Failed to get Details")
@@ -88,6 +102,40 @@ const AccountPage = () => {
             {
                 isLoading ? <BouncingDotsLoader /> :
                     <div className="p-6 flex flex-col gap-6 mx-auto">
+                        {
+                            cartItems.length > 0 && (
+                                <Card className="w-full  mx-auto shadow-lg border-0 bg-gradient-to-br from-green-50 to-blue-50">
+                                    <CardHeader className="pb-4">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <ShoppingBag className="h-5 w-5 text-green-600" />
+                                            <CardTitle className="text-xl">Continue Shopping</CardTitle>
+                                        </div>
+                                        <CardDescription>
+                                            Discover more amazing products in our collection
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="pb-4">
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-3 text-sm">
+                                                <Clock className="h-4 w-4 text-blue-500" />
+                                                <span>Your cart items are saved</span>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Button
+                                            onClick={() => router.push(`/${slug}/cart`)}
+                                            className="w-full bg-green-600 hover:bg-green-700 transition-colors"
+                                        >
+                                            Continue to cart
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+
+                            )
+                        }
+                        {/* {Continue Shopping Card} */}
                         {/* Account Details */}
                         <Card className="shadow-sm border rounded-2xl">
                             <CardHeader>

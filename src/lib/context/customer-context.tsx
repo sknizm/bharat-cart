@@ -1,16 +1,31 @@
 "use client"
-import { createContext, useContext } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { CustomerType } from "../types";
 
-const CustomerContext = createContext<CustomerType | null>(null);
+type CustomerContextType = {
+    customer: CustomerType | null;
+    refreshCustomer: () => Promise<void>;
+};
 
-export const CustomerProvider = ({ children, customer }
+const CustomerContext = createContext<CustomerContextType>({
+    customer: null,
+    refreshCustomer: async () => { },
+});
+
+export const CustomerProvider = ({ children, customer: initialCustomer }
     : {
         children: React.ReactNode;
         customer: CustomerType | null
     }) => {
+    const [customer, setCustomer] = useState<CustomerType | null>(initialCustomer)
+
+    const refreshCustomer = useCallback(async () => {
+        const res = await fetch(`/api/customer/get-current`);
+        const data = await res.json();
+        setCustomer(data.customer ?? null)
+    }, [])
     return (
-        <CustomerContext.Provider value={customer}>
+        <CustomerContext.Provider value={{ customer, refreshCustomer }}>
             {
                 children
             }

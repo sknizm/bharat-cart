@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import CustomTextLogo from '@/components/ui/custom-logo';
 import ErrorIcon from '@/components/ui/error-icon';
 import { Input } from '@/components/ui/input'
+import { useCustomer } from '@/lib/context/customer-context';
 import { useStore } from '@/lib/context/store-context';
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -18,6 +19,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const {refreshCustomer} = useCustomer();
 
 
  
@@ -39,6 +41,7 @@ const SignIn = () => {
 
       if (res.ok) {
         toast.success("Login Successful");
+        await refreshCustomer();
         router.push(`/${store.slug}/customer-dashboard/account`)
       } else {
         setErrorMessage(data.error)

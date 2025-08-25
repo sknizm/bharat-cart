@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import CustomTextLogo from '@/components/ui/custom-logo';
 import ErrorIcon from '@/components/ui/error-icon';
 import { Input } from '@/components/ui/input';
+import { useCart } from '@/lib/context/cart-context';
+import { useCustomer } from '@/lib/context/customer-context';
 import { useStore } from '@/lib/context/store-context';
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link';
@@ -13,6 +15,8 @@ import { toast } from 'sonner';
 
 const SignUp = () => {
   const router = useRouter();
+  const { refreshCustomer } = useCustomer();
+  const { cartItems } = useCart();
   const store = useStore();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -25,28 +29,33 @@ const SignUp = () => {
     setErrorMessage("")
 
     try {
-      if(store){
-        const id = store._id; 
-         const res = await fetch("/api/customer/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password, store:id })
-      });
+      if (store) {
+        const id = store._id;
+        const res = await fetch("/api/customer/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ email, password, store: id })
+        });
         const data = await res.json();
-      if (res.ok) {
-        toast.success("Profile created Successfully")
-        router.push(`/${store.slug}/customer-dashboard/account`)
+        if (res.ok) {
+          await refreshCustomer();
+          toast.success("Profile created Successfully")
+          if (cartItems.length > 0) {
+            router.push(`/${store.slug}/cart`)
+          } else {
+            router.push(`/${store.slug}/customer-dashboard/account`)
+          }
 
+        } else {
+          setErrorMessage(data.error)
+        }
       } else {
-        setErrorMessage(data.error)
-      }
-      }else{
         setErrorMessage("Store not found")
       }
-     
-    
+
+
 
     }
     catch (error) {
@@ -62,7 +71,7 @@ const SignUp = () => {
         <CardHeader className="flex flex-col items-center justify-center space-y-2 text-center">
           {
             store && (
-              <CustomTextLogo text={store.name}  />
+              <CustomTextLogo text={store.name} />
             )
           }
           <div className="space-y-2">
@@ -121,7 +130,7 @@ const SignUp = () => {
 
             {errorMessage && (
               <div className=" flex items-center p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
-                <ErrorIcon/>
+                <ErrorIcon />
                 {errorMessage}
               </div>
             )}

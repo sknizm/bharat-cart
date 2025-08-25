@@ -4,6 +4,7 @@ import { Header } from "@/components/store/header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCart } from "@/lib/context/cart-context";
+import { useCustomer } from "@/lib/context/customer-context";
 import { useStore } from "@/lib/context/store-context";
 import { formatIndianCurrency } from "@/lib/utils";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
@@ -15,6 +16,7 @@ const CartPage = () => {
     const { cartItems, updateCartItem, removeFromCart } = useCart();
     const [total, setTotal] = useState(0);
     const store = useStore();
+    const {customer} = useCustomer();
 
     useEffect(() => {
         setTotal(cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0));
@@ -115,10 +117,16 @@ const CartPage = () => {
                         </CardContent>
                         <CardFooter>
                             <Button className="w-full"
-                            onClick={()=>{
-                                router.push(`/${store.slug}/checkout`)
-                            }}
-                            >Proceed to Checkout</Button>
+                                onClick={() => {
+                                    if (customer) {
+                                        router.push(`/${store.slug}/checkout`)
+                                    } else {
+                                        router.push(`/${store.slug}/signup`)
+                                    }
+                                }}
+                            >{
+                                    customer ? "Proceed to Checkout" : "Create account to complete checkout"
+                                }</Button>
                         </CardFooter>
                     </Card>
                 </div>
