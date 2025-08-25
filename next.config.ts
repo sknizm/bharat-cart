@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    optimizeCss: false, // disable LightningCSS, fallback to PostCSS
-  },
 };
 
 export default nextConfig;
