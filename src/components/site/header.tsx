@@ -2,23 +2,20 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Lock, ChevronDown, User } from 'lucide-react'
-import { useState } from 'react'
+import { Lock, User, Sparkles } from 'lucide-react'
 import Logo from '../ui/logo'
 
 export default function Header({ isLoggedIn = false }) {
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false)
-
   return (
     <header className="w-full px-4 sm:px-6 py-3 bg-white/95 backdrop-blur-md border-b border-green-50 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo and Navigation */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-           <Logo/>
+            <Logo />
           </Link>
           
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-1">
             <Link href="#" className="text-gray-700 hover:text-green-600 transition-colors text-sm font-medium hover:bg-green-50 px-3 py-2 rounded-lg">
               Home
             </Link>
@@ -26,33 +23,8 @@ export default function Header({ isLoggedIn = false }) {
               Pricing
             </Link>
             <Link href="#" className="text-gray-700 hover:text-green-600 transition-colors text-sm font-medium hover:bg-green-50 px-3 py-2 rounded-lg">
-              Sample Menu
+              Features
             </Link>
-            
-            <div className="relative">
-              <button 
-                onClick={() => setIsResourcesOpen(!isResourcesOpen)}
-                className="flex items-center gap-1 text-gray-700 hover:text-green-600 transition-colors text-sm font-medium hover:bg-green-50 px-3 py-2 rounded-lg"
-              >
-                Resources
-                <ChevronDown className={`h-4 w-4 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {isResourcesOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-xl py-2 border border-green-100 z-10">
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors">
-                    Blog
-                  </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors">
-                    Guides
-                  </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors">
-                    Case Studies
-                  </Link>
-                </div>
-              )}
-            </div>
-            
             <Link href="#" className="text-gray-700 hover:text-green-600 transition-colors text-sm font-medium hover:bg-green-50 px-3 py-2 rounded-lg">
               Contact
             </Link>
@@ -63,8 +35,8 @@ export default function Header({ isLoggedIn = false }) {
         <div className="flex items-center gap-3">
           {isLoggedIn ? (
             <Link 
-              href="/dashboard" 
-              className="flex items-center gap-2 text-sm font-medium text-white bg-gradient-to-r from-green-600 to-indigo-600 hover:from-green-700 hover:to-indigo-700 px-4 py-2 rounded-lg shadow-sm transition-all"
+              href="/store-list" 
+              className="flex items-center gap-2 text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 px-4 py-2 rounded-lg shadow-sm transition-all hover:shadow-md"
             >
               <User className="h-4 w-4" />
               <span>Dashboard</span>
@@ -73,7 +45,7 @@ export default function Header({ isLoggedIn = false }) {
             <>
               <Link 
                 href="/signin" 
-                className="flex items-center gap-2 text-sm font-medium text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors"
+                className="flex items-center gap-2 text-sm font-medium text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors border border-green-100"
               >
                 <Lock className="h-4 w-4" />
                 <span>Sign In</span>
@@ -81,9 +53,10 @@ export default function Header({ isLoggedIn = false }) {
               
               <Button 
                 asChild
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-indigo-700 text-white shadow-md hover:shadow-lg transition-all"
+                className="bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-800 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-2"
               >
                 <Link href="/signup">
+                  <Sparkles className="h-4 w-4" />
                   <span>Get Started</span>
                 </Link>
               </Button>

@@ -29,3 +29,10 @@ export function formatIndianCurrency(amount: number | string): string {
   if (isNaN(num)) return String(amount);
   return num.toLocaleString("en-IN");
 }
+
+export function handleContactClick() {
+  const phoneNumber = "8455838503"; // Replace with your number
+  const message = encodeURIComponent("Hello, Can I get more info about MenuLink?");
+  const url = `https://wa.me/${phoneNumber}?text=${message}`;
+  window.open(url, "_blank");
+}

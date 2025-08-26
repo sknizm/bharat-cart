@@ -1,14 +1,13 @@
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Play } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section className="w-full bg-gradient-to-br from-green-50 via-white to-emerald-100/30 py-16 md:py-24 lg:py-32">
-      <div className="container pt-8 mx-auto px-4 sm:px-6 flex flex-col items-center gap-16">
+    <section className="w-full bg-gradient-to-br from-green-50 via-white to-emerald-100/30 py-16 lg:py-16 ">
+      <div className="container pt-8  px-0.5 sm:px-6 flex flex-col items-center gap-16">
         {/* Content */}
-        <div className="space-y-4  text-center ">
-          <h1 className="text-4xl leading-none  sm:text-5xl md:text-6xl font-bold text-gray-900 ">
+        <div className="space-y-4 px-1  text-center ">
+          <h1 className="text-3xl leading-none  sm:text-6xl md:text-6xl font-bold text-gray-900 ">
             Take your business online
             <br />
              reach <span className=" decoration-green-600  underline underline-offset-4 decoration-4">more customers</span>
@@ -20,14 +19,14 @@ export default function Hero() {
 
           <div className="flex flex-row mt-6  gap-4 justify-center">
             <Button
-              className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 rounded-sm"
+              className=" text-xs bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 rounded-sm"
             >
               Create Ecommerce Store →
             </Button>
 
             <Button
               variant="outline"
-              className="border-green-300 text-green-600 hover:bg-green-50 gap-2 hover:border-green-400 px-8 py-3  rounded-sm transition-all duration-300"
+              className=" text-xs border-green-300 text-green-600 hover:bg-green-50 gap-2 hover:border-green-400 px-8 py-3  rounded-sm transition-all duration-300"
             >
               <Play className="h-5 w-5 fill-green-600 text-green-600" />
               See Demo
@@ -51,7 +50,7 @@ export default function Hero() {
 
         {/* IFrame */}
        
-       <div className="relative w-full max-w-4xl mx-auto">
+       <div className="relative px-3 w-full max-w-4xl mx-auto">
   {/* Browser Chrome */}
   <div className="bg-gray-100 rounded-t-xl p-3 flex items-center justify-between border border-gray-200">
     <div className="flex items-center space-x-2">
