@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner";
 
 const CustomerOrderPage = () => {
-    const customer = useCustomer();
+    const {customer} = useCustomer();
     const router = useRouter();
     const { slug } = useParams();
     const [isLoading, setIsLoading] = useState(true);

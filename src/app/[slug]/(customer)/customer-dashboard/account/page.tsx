@@ -7,13 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import BouncingDotsLoader from "@/components/ui/bounce-loader";
 import { toast } from "sonner";
-import { ArrowRight, Clock, Loader2, ShoppingBag, Tag } from "lucide-react";
+import { ArrowRight, Clock, Loader2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/context/cart-context";
 import router from "next/router";
 import { useParams } from "next/navigation";
 
 const AccountPage = () => {
-    const customer = useCustomer();
+    const {customer} = useCustomer();
     const { slug } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [isUpdating, setIsUpdating] = useState(false);

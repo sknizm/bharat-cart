@@ -3,8 +3,7 @@ import { Footer } from "@/components/store/footer"
 import { Header } from "@/components/store/header"
 import { Button } from "@/components/ui/button"
 import { useParams, useRouter } from "next/navigation"
-import { CheckCircle, Package, ShoppingBag, Home, Clock } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { CheckCircle, Package,  Home } from "lucide-react"
 
 const ThankYouPage = () => {
     const router = useRouter();
