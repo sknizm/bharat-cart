@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Lock, ChevronDown, User } from 'lucide-react'
 import { useState } from 'react'
-import Image from 'next/image'
-import logo from '@/components/media/logo.png' 
+import Logo from '../ui/logo'
 
 export default function Header({ isLoggedIn = false }) {
   const [isResourcesOpen, setIsResourcesOpen] = useState(false)
@@ -16,10 +15,7 @@ export default function Header({ isLoggedIn = false }) {
         {/* Logo and Navigation */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-            {/* <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-indigo-600 bg-clip-text text-transparent">
-              MenuLink
-            </span> */}
-            <Image src={logo} width={120} alt={''}/>
+           <Logo/>
           </Link>
           
           <nav className="hidden md:flex items-center gap-6">
