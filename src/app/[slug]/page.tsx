@@ -5,28 +5,30 @@ import { Footer } from '@/components/store/footer'
 import { Header } from '@/components/store/header'
 import { Skeleton } from '@/components/ui/skeleton';
 import { useStore } from '@/lib/context/store-context';
+import { BannerType } from '@/lib/types';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const Store = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
+  const [banner, setBanner] = useState<BannerType[]>([]);
+  const {slug} = useParams();
   const store = useStore();
 
   useEffect(() => {
-    getStoreData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-
+    
   const getStoreData = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/store/${store.slug}`)
+      const res = await fetch(`/api/store/${slug}`)
 
       const data = await res.json();
-      setProducts(data.products)
-      setCategories(data.categories)
+      console.log("STORE_DATA", data) 
+      setProducts(data.products);
+      setCategories(data.categories);
+      setBanner(data.store.banner);
       
       if (!res.ok) {
         return <div>Try Again </div>
@@ -39,6 +41,12 @@ const Store = () => {
 
     }
   }
+
+    getStoreData()
+    
+  }, [slug])
+
+
 
 
   return (
@@ -62,8 +70,8 @@ const Store = () => {
         :
         <div className='min-h-screen w-full bg-gray-50'>
           <Header />
-          <main className='container mx-auto px-4 py-6 space-y-6'>
-            <Banner name={store.name} description={store.description}/>
+          <main className='container mx-auto px-0 py-3 space-y-6'>
+            <Banner banner={banner} name={store.name} description={store.description}/>
             <CategoryList products={products} categories={categories} />
 
           </main>

@@ -138,14 +138,14 @@ const Products = () => {
                               {product.salePrice && product.salePrice > 0 ? (
                                 <>
                                   <span className="text-gray-500 line-through">
-                                    ${Number(product.price).toFixed(2)}
+                                     ₹{Number(product.price).toFixed(2)}
                                   </span>
                                   <span className="font-medium">
-                                    ${Number(product.salePrice).toFixed(2)}
+                                     ₹{Number(product.salePrice).toFixed(2)}
                                   </span>
                                 </>
                               ) : (
-                                <span> ${Number(product.price).toFixed(2)}</span>
+                                <span>  ₹{Number(product.price).toFixed(2)}</span>
                               )}
                             </div>
                           </TableCell>

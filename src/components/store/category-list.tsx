@@ -80,7 +80,7 @@ export function CategoryList({ products, categories }: Props) {
               className="space-y-4 scroll-mt-24"
             >
               <h2 className="text-2xl font-bold">{category.name}</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {categoryProducts.map(product => {
                   const quantity = getQuantity(product._id)
                   return (<ProductCard quantity={quantity} key={product._id} product={product} />)

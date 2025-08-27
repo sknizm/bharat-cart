@@ -16,6 +16,7 @@ export interface StoreType {
   logo?: string ;
   description?: string ;
   favicon?: string ;
+  banner: BannerType[];
 };
 export interface ImageType {
   _id: string;
@@ -64,4 +65,9 @@ export interface OrderType {
   status: string;
   paymentStatus: string;
   createdAt: string;
+}
+
+export interface BannerType{
+  url:string,
+  link?:string
 }

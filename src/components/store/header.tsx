@@ -26,7 +26,7 @@ export function Header() {
 
   return (
     <nav className={`
-      w-full h-16 px-6 flex items-center justify-between
+      w-full h-16 px-2 flex items-center justify-between
       sticky top-0 z-50 transition-all duration-300
       ${isScrolled
         ? "bg-white/95 backdrop-blur-lg shadow-md border-b border-gray-100"
@@ -35,7 +35,7 @@ export function Header() {
       {/* Logo/Brand */}
       <div className="flex items-center">
         {store.logo ? (
-          <div className="relative h-10 w-32 cursor-pointer" onClick={() => router.push(`/${store.slug}`)}>
+          <div className="relative m-0 h-10 w-32 cursor-pointer" onClick={() => router.push(`/${store.slug}`)}>
             <Image
               src={store.logo}
               alt={store.name}

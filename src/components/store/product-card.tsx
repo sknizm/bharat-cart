@@ -13,7 +13,10 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
     const store = useStore();
     const router = useRouter();
     const imageUrl = product.images?.[0] ?? '/placeholder-product.jpg'
-    const hasSale = product.salePrice !== undefined && product.salePrice !== product.price
+    const hasSale =
+        product.salePrice !== undefined &&
+        product.salePrice > 0 &&
+        product.salePrice < product.price;
 
 
     const goToProductPage = () => {
