@@ -110,10 +110,10 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
             {hasSale ? (
               <>
                 <span className="text-2xl font-bold ">
-                  ${product.salePrice?.toFixed(2)}
+                  ₹{product.salePrice?.toFixed(2)}
                 </span>
                 <span className="text-md text-gray-500 line-through ml-2">
-                  ${product.price.toFixed(2)}
+                  ₹{product.price.toFixed(2)}
                 </span>
                 {product.salePrice && <Badge variant="outline" className="ml-2">
                   {Math.round((1 - product.salePrice / product.price) * 100)}% OFF
@@ -121,7 +121,7 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
               </>
             ) : (
               <span className="text-2xl font-bold">
-                ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(2)}
               </span>
             )}
           </div>
@@ -144,7 +144,7 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
             <Button onClick={() => copyToClipBoard(currentUrl)} variant="outline" size="icon">
               <Copy className="w-5 h-5" />
             </Button>
-            <Button onClick={()=>shareText(currentUrl)} variant="outline" size="icon">
+            <Button onClick={() => shareText(currentUrl)} variant="outline" size="icon">
               <Share2 className="w-5 h-5" />
             </Button>
           </div>

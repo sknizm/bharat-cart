@@ -126,7 +126,8 @@ export function ImageBucket({  onSelect }: ImageBucketProps) {
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl w-[calc(100%-2rem)] sm:w-full h-[80vh] flex flex-col">
-                <DialogHeader>
+              <ScrollArea className=' max-h-full'>
+                  <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <ImageIcon className="w-5 h-5" />
                         Your Media Library
@@ -201,7 +202,7 @@ export function ImageBucket({  onSelect }: ImageBucketProps) {
                         </div>
                     )}
 
-                    <ScrollArea className="flex-1 border rounded-lg">
+                    <div className="border rounded-lg">
                         {fetching ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 p-3">
                                 {Array.from({ length: 8 }).map((_, i) => (
@@ -261,8 +262,9 @@ export function ImageBucket({  onSelect }: ImageBucketProps) {
                                 ))}
                             </div>
                         )}
-                    </ScrollArea>
+                    </div>
                 </div>
+              </ScrollArea>
             </DialogContent>
         </Dialog>
 

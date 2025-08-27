@@ -16,7 +16,7 @@ export interface StoreType {
   logo?: string ;
   description?: string ;
   favicon?: string ;
-  banner: BannerType[];
+  banner?: BannerType[];
 };
 export interface ImageType {
   _id: string;
