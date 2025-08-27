@@ -39,7 +39,7 @@ export default function Pricing2({ isWhatsApp, isMembershipInactive = false }: P
         },
         {
             name: "Lifetime Access",
-            price: "₹499",
+            price: "₹799",
             originalPrice: "₹1499",
             description: "One-time payment for unlimited access forever",
             features: [

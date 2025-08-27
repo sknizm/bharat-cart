@@ -10,7 +10,7 @@ export default function Hero() {
           <h1 className="text-3xl leading-none  sm:text-6xl md:text-6xl font-bold text-gray-900 ">
             Take your business online
             <br />
-             reach <span className=" decoration-green-600  underline underline-offset-4 decoration-4">more customers</span>
+            reach <span className=" decoration-green-600  underline underline-offset-4 decoration-4">more customers</span>
           </h1>
 
           <p className="text-sm sm:text-xl sm:mt-8 mt-2 text-gray-600 max-w-2xl mx-auto leading-tight">
@@ -49,36 +49,36 @@ export default function Hero() {
         </div>
 
         {/* IFrame */}
-       
-       <div className="relative px-3 w-full max-w-4xl mx-auto">
-  {/* Browser Chrome */}
-  <div className="bg-gray-100 rounded-t-xl p-3 flex items-center justify-between border border-gray-200">
-    <div className="flex items-center space-x-2">
-      <div className="w-3 h-3 rounded-full bg-red-400"></div>
-      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-      <div className="w-3 h-3 rounded-full bg-green-400"></div>
-    </div>
-    <div className="flex-1 mx-4 bg-white rounded-md py-1 px-3 text-xs text-gray-500 truncate">
-      https://menulink.space/demo
-    </div>
-    <div className="w-6"></div>
-  </div>
-  
-  {/* Iframe Container */}
-  <div className="relative aspect-video bg-white rounded-b-xl border border-gray-200 border-t-0 shadow-lg overflow-hidden">
-    <iframe 
-      src="https://menulink.space/demo" 
-      className="w-full h-full border-none"
-      title="Digital Menu Preview"
-      sandbox="allow-same-origin allow-scripts"
-      loading="lazy"
-    />
-    <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-2 py-1 rounded-md z-10">
-      Live Preview
-    </div>
-  </div>
-  
-</div>
+
+        <div className="relative  px-3 w-full max-w-4xl mx-auto">
+          {/* Browser Chrome */}
+          <div className="bg-gray-100 rounded-t-xl p-3 flex items-center justify-between border border-gray-200">
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            <div className="flex-1 mx-4 bg-white rounded-md py-1 px-3 text-xs text-gray-500 truncate">
+              https://2cd.site/baggo
+            </div>
+            <div className="w-6"></div>
+          </div>
+
+          {/* Iframe Container */}
+          <div className="relative sm:h-auto h-[50vh] max-w-full aspect-video bg-white rounded-b-xl border border-gray-200 border-t-0 shadow-lg overflow-hidden">
+            <iframe
+              src="https://2cd.site/baggo"
+              className="w-full h-full  border-none"
+              title="Digital Menu Preview"
+              sandbox="allow-same-origin allow-scripts"
+              loading="lazy"
+            />
+            <div className="absolute top-4 left-4 bg-red-600 animate-[caret-blink_2000ms_step-start_infinite] text-white text-xs px-2 py-1 rounded-md z-10">
+              Live Demo
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )
