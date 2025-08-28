@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStore } from "@/lib/context/store-context"
-import {   Globe2, Loader2 } from "lucide-react"
+import { Globe2, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -24,17 +24,20 @@ const CustomDomainPage = () => {
     ];
 
     useEffect(() => {
-        
-        if (store.domain) {
-            setIsLoading(false);
-            setDomain(store.domain || "");
-            isDomainVerified();
 
+        if (store) {
+            setIsLoading(false);
+            if (store.domain) {
+                setDomain(store.domain || "");
+                isDomainVerified();
+
+            }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.domain])
 
-    
+
     const isDomainVerified = async () => {
         try {
             const res = await fetch(
