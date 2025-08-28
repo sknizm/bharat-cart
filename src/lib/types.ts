@@ -12,10 +12,10 @@ export interface StoreType {
   _id: string;
   name: string;
   slug: string;
-  domain?: string ;
-  logo?: string ;
-  description?: string ;
-  favicon?: string ;
+  domain?: string;
+  logo?: string;
+  description?: string;
+  favicon?: string;
   banner?: BannerType[];
 };
 export interface ImageType {
@@ -29,20 +29,21 @@ export interface CategoryType {
 }
 
 export interface ProductType {
-  _id:string,
-  name:string,
-  description?:string,
-  price:number,
-  salePrice?:number,
-  images:string[],
-  categories:string[]
+  _id: string,
+  name: string,
+  description?: string,
+  price: number,
+  salePrice?: number,
+  images: string[],
+  categories: string[],
+  variant?:VariantType[]
 }
 
-export interface CartItemType{
-  _id:string,
-  name:string,
-  price:number,
-  quantity:number
+export interface CartItemType {
+  _id: string,
+  name: string,
+  price: number,
+  quantity: number
 }
 
 
@@ -56,18 +57,24 @@ export interface OrderType {
   _id: string;
   customer: string;
   customerEmail?: string;
-  type:string;
+  type: string;
   store?: string;
-  items:[],
+  items: [],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  details:any,
+  details: any,
   amount: number;
   status: string;
   paymentStatus: string;
   createdAt: string;
 }
 
-export interface BannerType{
-  url:string,
-  link?:string
+export interface BannerType {
+  url: string,
+  link?: string
+}
+
+export interface VariantType {
+  type: string,
+  value: string,
+  price: number
 }

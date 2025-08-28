@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, ShoppingCart, Share2, CircleCheck, Copy } from 'lucide-react';
@@ -15,11 +15,40 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addToCart, getQuantity } = useCart();
   const quantity = getQuantity(product._id);
+  const [price, setPrice] = useState(0);
+  const [name, setName] = useState("");
+  console.log("PRODUCT VAR", product)
 
   const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}${usePathname()}`;
 
   const hasSale = product.salePrice && product.salePrice < product.price;
+
   const mainImage = product.images[selectedImageIndex] || '/placeholder-product.jpg';
+
+
+  // 🔥 flatten variant and group by type
+  const variants = (product?.variant?.flat?.() || []).reduce(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (acc: Record<string, any[]>, v: any) => {
+      if (!acc[v.type]) acc[v.type] = [];
+      acc[v.type].push(v);
+      return acc;
+    },
+    {}
+  );
+
+  // keep track of selected options
+  const [selectedVariants, setSelectedVariants] = useState<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Record<string, any>
+  >({});
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selectVariant = (type: string, option: any) => {
+    setSelectedVariants((prev) => ({ ...prev, [type]: option }));
+    setPrice(option.price); // ✅ variant price replaces product/base price
+    setName(`${product.name} (${type}: ${option.value})`); // ✅ update name with selected variant
+  };
 
   const nextImage = () => {
     setSelectedImageIndex((prev) =>
@@ -32,6 +61,18 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
+
+
+  useEffect(() => {
+    if (hasSale && product.salePrice) {
+      setPrice(product.salePrice)
+    } else {
+      setPrice(product.price)
+    }
+    setName(product.name);
+  }, [hasSale, product])
+
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -110,7 +151,7 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
             {hasSale ? (
               <>
                 <span className="text-2xl font-bold ">
-                  ₹{product.salePrice?.toFixed(2)}
+                  ₹{price.toFixed(2)}
                 </span>
                 <span className="text-md text-gray-500 line-through ml-2">
                   ₹{product.price.toFixed(2)}
@@ -121,17 +162,43 @@ export function SingleProductComponent({ product }: { product: ProductType }) {
               </>
             ) : (
               <span className="text-2xl font-bold">
-                ₹{product.price.toFixed(2)}
+                ₹{price.toFixed(2)}
               </span>
             )}
           </div>
 
+          {/* Variants */}
+          {Object.keys(variants).length > 0 && (
+            <div className="space-y-4">
+              {Object.entries(variants).map(([type, options]) => (
+                <div key={type} className="space-y-2">
+                  <p className="font-medium">{type}</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {// eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      options.map((opt: any) => {
+                        const isSelected =
+                          selectedVariants[type]?._id === opt._id;
+                        return (
+                          <Button
+                            key={opt._id}
+                            variant={isSelected ? "default" : "outline"}
+                            onClick={() => selectVariant(type, opt)}
+                          >
+                            {opt.value}
+                          </Button>
+                        );
+                      })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
 
           {/* Action Buttons */}
           <div className="flex gap-4">
             <Button onClick={() => {
-              addToCart({ _id: product._id, name: product.name, price: product.price });
+              addToCart({ _id: product._id, name: name, price: price });
             }} size="lg" className="flex-1 gap-2">
               {quantity > 0 ?
                 <>

@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useStore } from '@/lib/context/store-context'
-import { CategoryType } from '@/lib/types'
+import { CategoryType, VariantType } from '@/lib/types'
 import { Loader2, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -29,11 +29,36 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
 
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [newCategoryLoading, setNewCategoryLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isProductLoading, setIsProductLoading] = useState(false);
 
-  const handleImageDelete = (url:string) =>{
-    setImages(prev=>prev.filter((i)=> i!== url))
+
+  // variants
+  const [variant, setVariant] = useState<VariantType[]>([]);
+  const [variantType, setVariantType] = useState("");
+  const [variantValue, setVariantValue] = useState("");
+  const [variantPrice, setVariantPrice] = useState(0);
+
+  // --- add/remove variant ---
+  const addVariant = () => {
+    if (!variantType || !variantValue) {
+      toast.error("Please enter variant type and value");
+      return;
+    }
+    setVariant(prev => [...prev, { type: variantType, value: variantValue, price: variantPrice }]);
+    setVariantType("");
+    setVariantValue("");
+    setVariantPrice(0);
+  }
+
+  const removeVariant = (i: number) => {
+    setVariant(prev => prev.filter((_, idx) => idx !== i));
+  }
+
+
+  const handleImageDelete = (url: string) => {
+    setImages(prev => prev.filter((i) => i !== url))
   }
 
   const toogleCategory = (id: string) => {
@@ -41,27 +66,33 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
   }
 
   useEffect(() => {
-    
-  const getProductDetails = async () => {
-    try {
-      const res = await fetch(`/api/store/${store.slug}/product/${_id}`);
-      if (!res.ok) {
-        toast.error("Failed to load Product data")
-      } else {
-        const data = await res.json();
-        setImages(data.product.images);
-        setName(data.product.name);
-        setDescription(data.product.description);
-        setPrice(data.product.price);
-        setSalePrice(data.product.salePrice);
-        setSelectedCategories(data.product.categories)
-        setIsProductLoading(false);
+
+    const getProductDetails = async () => {
+      try {
+        setIsLoading(true);
+        const res = await fetch(`/api/store/${store.slug}/product/${_id}`);
+        if (!res.ok) {
+          toast.error("Failed to load Product data")
+        } else {
+          const data = await res.json();
+
+          console.log("VARIANT", data)
+          setImages(data.product.images);
+          setName(data.product.name);
+          setDescription(data.product.description);
+          setPrice(data.product.price);
+          setSalePrice(data.product.salePrice);
+          setSelectedCategories(data.product.categories);
+          setVariant(data.product.variant.flat())
+          setIsProductLoading(false);
+        }
+      } catch (error) {
+        console.log(error)
+        toast.error("Internal server error")
+      }finally{
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.log(error)
-      toast.error("Internal server error")
     }
-  }
 
     setIsProductLoading(true);
     getAllCategory();
@@ -71,13 +102,14 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
       setIsProductLoading(false);
 
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, _id])
 
 
   const addNewCategory = async () => {
     try {
       setNewCategoryLoading(true);
+        setIsUpdating(true);
       if (!newCategory) {
         toast.error("Please add a Category Name")
       } else {
@@ -92,6 +124,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
           toast.error("Failed to add new category")
         } else {
           toast.success("Category added successfully");
+          setNewCategory("");
           getAllCategory()
         }
       }
@@ -100,6 +133,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
       console.log(error)
     } finally {
       setNewCategoryLoading(false);
+        setIsUpdating(false);
     }
   }
 
@@ -126,7 +160,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
 
   const handleAddProduct = async () => {
     try {
-      setIsLoading(true);
+        setIsUpdating(true);
       const res = await fetch(
         isEditMode ? `/api/store/${store.slug}/product/${_id}` : `/api/store/${store.slug}/product`
         , {
@@ -140,21 +174,22 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
             images: images,
             price: price,
             salePrice: salePrice,
-            categories: selectedCategories
+            categories: selectedCategories,
+            variant:variant
           })
         });
 
       if (!res.ok) {
         toast.error(isEditMode ? "Failed to update product" : "Failed to create Product");
       } else {
-        toast.success(isEditMode?"Product updated successfully":"Product added successfully");
+        toast.success(isEditMode ? "Product updated successfully" : "Product added successfully");
         router.push(`/${store.slug}/dashboard/products`)
       }
     } catch (error) {
       console.log(error);
       toast.error(isEditMode ? "Failed to update product" : "Failed to create Product");
     } finally {
-      setIsLoading(false)
+        setIsUpdating(false);
     }
   }
 
@@ -162,7 +197,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
   return (
     <div className=' w-full p-4'>
       {
-        isProductLoading ? <BouncingDotsLoader /> : <>
+        isProductLoading || isLoading ? <BouncingDotsLoader /> : <>
           <Card>
             <CardHeader>
               <CardTitle className=' text-lg bold'>Product Information</CardTitle>
@@ -179,11 +214,11 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
 
                       <div key={i} className=' relative w-40 h-40 rounded-md overflow-hidden'>
                         <Image src={url} alt='product' fill objectFit='object-cover' />
-                        <Button 
-                        variant={'outline'}
-                        className=' absolute top-2 right-2'
-                        onClick={()=>handleImageDelete(url)}>
-                          <Trash2 className='w-4 h-4 text-red-600'/>
+                        <Button
+                          variant={'outline'}
+                          className=' absolute top-2 right-2'
+                          onClick={() => handleImageDelete(url)}>
+                          <Trash2 className='w-4 h-4 text-red-600' />
                         </Button>
                       </div>
                     ))}
@@ -277,6 +312,43 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
                 </div>
               </div>
 
+              {/* Variants */}
+              <div className='mt-12'>
+                <Label className='block font-medium mb-2'>Variants</Label>
+                <div className='flex gap-2 mb-4'>
+                  <Input
+                    placeholder='Type (e.g. Size, Color)'
+                    value={variantType}
+                    onChange={(e) => setVariantType(e.target.value)}
+                  />
+                  <Input
+                    placeholder='Value (e.g. XL, Red)'
+                    value={variantValue}
+                    onChange={(e) => setVariantValue(e.target.value)}
+                  />
+                  <Input
+                    type='number'
+                    placeholder='Price (optional)'
+                    value={variantPrice}
+                    onChange={(e) => setVariantPrice(Number(e.target.value))}
+                  />
+                  <Button onClick={addVariant}>Add</Button>
+                </div>
+
+                {variant.length > 0 && (
+                  <div className='flex flex-col gap-2'>
+                    {variant.map((v, i) => (
+                      <div key={i} className='flex justify-between items-center border p-2 rounded'>
+                        <span>{v.type}: {v.value} — {v.price}</span>
+                        <Button size='sm' variant='destructive' onClick={() => removeVariant(i)}>
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
 
               <CardFooter>
 
@@ -285,7 +357,7 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
           </Card>
           <div className=' mt-2 w-full flex items-center justify-end gap-4'>
             <Button
-              disabled={isLoading || categoryLoading}
+              disabled={isUpdating || categoryLoading}
               onClick={() => {
                 router.push(`/${store.slug}/dashboard/products`)
               }}
@@ -294,12 +366,12 @@ const AddUpdateProduct = ({ _id }: { _id?: string }) => {
             >Cancel</Button>
 
             <Button
-              disabled={isLoading || categoryLoading}
+              disabled={isUpdating || categoryLoading}
               onClick={handleAddProduct}>
-              {isLoading ? <>
+              {isUpdating ? <>
                 <Loader2 className=' w-4 h-4 animate-spin mr-2' />
-                {isEditMode ?  "Updating Product":"Creating Product"}
-              </> : <>{isEditMode ? "Update Product":"Add Product"}</>}
+                {isEditMode ? "Updating Product" : "Creating Product"}
+              </> : <>{isEditMode ? "Update Product" : "Add Product"}</>}
             </Button>
 
           </div>

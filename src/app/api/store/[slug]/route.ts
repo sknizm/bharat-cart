@@ -30,7 +30,7 @@ export async function GET(
             ));
         }
         const products = await Product.find({ store: store._id })
-            .select("name price images categories salePrice")
+            .select("name price images categories salePrice variant")
             .lean().exec();
 
         const categories = await Category.find({ store: store._id })

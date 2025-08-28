@@ -5,8 +5,8 @@ import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
 export async function OPTIONS() {
-  // Respond to preflight with empty 204 but include CORS headers
-  return corsResponse(new NextResponse(null, { status: 204 }));
+    // Respond to preflight with empty 204 but include CORS headers
+    return corsResponse(new NextResponse(null, { status: 204 }));
 }
 
 export async function GET(req: Request,
@@ -39,7 +39,7 @@ export async function PUT(req: Request,
         if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
         const { _id } = context.params;
-        const { name, description, price, salePrice, categories, images } = await req.json();
+        const { name, description, price, salePrice, categories, images, variant } = await req.json();
 
         const product = await Product.findByIdAndUpdate({ _id }, {
             name: name,
@@ -47,7 +47,8 @@ export async function PUT(req: Request,
             images: images,
             price: price,
             salePrice: salePrice,
-            categories: categories
+            categories: categories,
+            variant: variant
         }, { new: true });
 
         if (!product) return NextResponse.json({ error: "Product not found" }, { status: 404 });

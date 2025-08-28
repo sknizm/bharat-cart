@@ -1,6 +1,6 @@
 import { ProductType } from "@/lib/types"
 import { Button } from "../ui/button"
-import { CircleCheck, ShoppingCart } from "lucide-react"
+import { BoxSelect, CircleCheck, List, Option, OptionIcon, ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useCart } from "@/lib/context/cart-context";
 import { formatIndianCurrency } from "@/lib/utils";
@@ -18,6 +18,9 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
         product.salePrice > 0 &&
         product.salePrice < product.price;
 
+    const hasVariant = product.variant !== undefined
+        && product.variant !== null
+        && product.variant.length > 0;
 
     const goToProductPage = () => {
         router.push(`/${store.slug}/product/${product._id}`);
@@ -71,8 +74,12 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
                 {/* Add to Cart Button */}
                 <Button
                     onClick={() => {
-                        const price = product.salePrice ? product.salePrice : product.price;
+                       if(hasVariant){
+                        goToProductPage();
+                       }else{
+                         const price = product.salePrice ? product.salePrice : product.price;
                         addItemToCart(product._id, product.name, price)
+                       }
                     }}
                     variant="outline"
                     size="sm"
@@ -83,9 +90,15 @@ export function ProductCard({ product, quantity }: { product: ProductType, quant
                             Added to Cart
                         </>
 
-                        : <>
-                            <ShoppingCart className="w-4 h-4 mr-2" />
-                            Add to Cart</>}
+                        : <> 
+                            {
+                                hasVariant ?
+                                    <> <List className="w-4 h-4 mr-2" />
+                                        Select Options</>
+                                    : <> <ShoppingCart className="w-4 h-4 mr-2" />
+                                        Add to Cart</>
+                            }
+                        </>}
                 </Button>
             </div>
         </div>
